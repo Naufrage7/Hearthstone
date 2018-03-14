@@ -1,6 +1,6 @@
 package jeu;
 
-public class Heros {
+public class Heros implements ICible {
 	
 	private String nom;
 	private int vie;
@@ -53,6 +53,14 @@ public class Heros {
 	 */
 	public int getVie() {
 		return this.vie;
+	}
+	
+	/**
+	 * Occasionne des dégats au héros
+	 * @param degats
+	 */
+	public void recevoirDegats(int degats) {
+		this.setVie(this.getVie() - degats);
 	}
 
 }

@@ -1,4 +1,4 @@
-package jeu;
+package jeu.capacites;
 
 public interface ICapacite {
 

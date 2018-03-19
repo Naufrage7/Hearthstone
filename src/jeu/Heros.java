@@ -1,20 +1,44 @@
 package jeu;
 
+import jeu.capacites.ICapacite;
+
 public class Heros implements ICible {
 	
 	private String nom;
 	private int vie;
+	private ICapacite capacite;
 	
 	/**
 	 * Construit un héros à partir de son nom et de sa vie
 	 * @param nom
 	 * @param vie
 	 */
-	public Heros(String nom, int vie) {
+	public Heros(String nom, int vie, ICapacite capacite) {
 		this.setNom(nom);
 		this.setVie(vie);
+		this.setCapacite(capacite);
 	}
 	
+	/**
+	 * Attribue une capacité au héros
+	 * @param capacite
+	 */
+	private void setCapacite(ICapacite capacite) {
+		if ( capacite != null ) {
+			this.capacite = capacite;
+		} else {
+			// Exception
+		}
+	}
+	
+	/**
+	 * Retourne la capacité du héros
+	 * @return
+	 */
+	public ICapacite getCapacite() {
+		return this.capacite;
+	}
+
 	/**
 	 * Attribue le nom au héros
 	 * @param nom
@@ -61,6 +85,10 @@ public class Heros implements ICible {
 	 */
 	public void recevoirDegats(int degats) {
 		this.setVie(this.getVie() - degats);
+	}
+	
+	public void utiliserPouvoir(Object cible) {
+		this.capacite.executerAction(cible);
 	}
 
 }

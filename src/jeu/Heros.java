@@ -2,7 +2,7 @@ package jeu;
 
 import jeu.capacites.ICapacite;
 
-public class Heros implements ICible {
+public class Heros implements IPersonnage {
 	
 	private String nom;
 	private int vie;
@@ -27,7 +27,7 @@ public class Heros implements ICible {
 		if ( capacite != null ) {
 			this.capacite = capacite;
 		} else {
-			// Exception
+			throw new IllegalArgumentException();
 		}
 	}
 	
@@ -47,7 +47,7 @@ public class Heros implements ICible {
 		if ( nom != null ) {
 			this.nom = nom;
 		} else {
-			// Exception
+			throw new IllegalArgumentException();
 		}
 	}
 
@@ -56,10 +56,10 @@ public class Heros implements ICible {
 	 * @param vie
 	 */
 	private void setVie(int vie) {
-		if ( vie < 0 ) {
-			this.vie = 0;
-		} else {
+		if ( vie >= 0 ) {
 			this.vie = vie;
+		} else {
+			throw new IllegalArgumentException();
 		}
 	}
 	
@@ -80,14 +80,40 @@ public class Heros implements ICible {
 	}
 	
 	/**
-	 * Occasionne des dégats au héros
+	 * Attaque et occasionne des dégats au personnage ciblé et à l'attaquant ( si l'adversaire dispose de points d'attaque )
 	 * @param degats
 	 */
-	public void recevoirDegats(int degats) {
-		this.setVie(this.getVie() - degats);
+	public void attaquer(IPersonnage personnage) {
+		personnage.recevoirDegats(this.getDegats());
+		this.recevoirDegats(personnage.getDegats());
 	}
 	
-	public void utiliserPouvoir(Object cible) {
+	/**
+	 * Retourne le nombre de dégats du héros
+	 * @return
+	 */
+	public int getDegats() {
+		return 0;
+	}
+	
+	/**
+	 * Réduit la vie du héros en lui infligeant des dégats
+	 */
+	public void recevoirDegats(int degats) {
+		int vie = this.getVie() - degats;
+		if ( vie >= 0 ) {
+			this.setVie(vie);
+		} else {
+			this.setVie(0);
+		}
+	}
+	
+	/**
+	 * Utilise le pouvoir du héros sur une cible
+	 * @param cible
+	 * @throws HearthstoneException 
+	 */
+	public void utiliserPouvoir(Object cible) throws HearthstoneException {
 		this.capacite.executerAction(cible);
 	}
 

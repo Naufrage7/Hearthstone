@@ -1,5 +1,6 @@
 package jeu.capacites;
 
+import jeu.HearthstoneException;
 import jeu.IJoueur;
 
 public class CapacitePioche implements ICapacite {
@@ -19,7 +20,7 @@ public class CapacitePioche implements ICapacite {
 	}
 	
 	@Override
-	public void executerAction(Object cible) {
+	public void executerAction(Object cible) throws HearthstoneException {
 		this.joueur.piocher();
 	}
 
@@ -29,7 +30,7 @@ public class CapacitePioche implements ICapacite {
 	}
 
 	@Override
-	public void executerEffetDisparition() {
+	public void executerEffetDisparition(Object cible) throws HearthstoneException {
 		// Rien à faire
 	}
 
@@ -39,7 +40,7 @@ public class CapacitePioche implements ICapacite {
 	}
 
 	@Override
-	public void executerEffetMiseEnJeu(Object cible) {
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
 		this.executerAction(cible);
 	}
 

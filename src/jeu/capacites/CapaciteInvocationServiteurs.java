@@ -22,7 +22,7 @@ public class CapaciteInvocationServiteurs implements ICapacite {
 	}
 
 	@Override
-	public void executerEffetDisparition() {
+	public void executerEffetDisparition(Object o) {
 		// Rien à faire
 	}
 

@@ -1,4 +1,6 @@
-package jeu;
+package heros;
+
+import jeu.ICible;
 
 public class Heros implements ICible {
 

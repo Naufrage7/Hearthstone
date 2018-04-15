@@ -1,4 +1,6 @@
-package jeu;
+package capacite;
+
+import exception.HearthstoneException;
 
 /**
  * Une capacité, c'est l'abstraction générique pour décrire, le pouvoir du

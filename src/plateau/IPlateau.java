@@ -1,4 +1,7 @@
-package jeu;
+package plateau;
+
+import exception.HearthstoneException;
+import joueur.IJoueur;
 
 /**
  * Le plateau gère toute la partie, notamment le début et la fin de partie. Il

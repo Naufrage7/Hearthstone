@@ -1,6 +1,10 @@
-package jeu;
+package joueur;
 
 import java.util.ArrayList;
+
+import carte.ICarte;
+import exception.HearthstoneException;
+import heros.Heros;
 
 /**
  * Cette interface définit le comportement (normalement) minimal d'un joueur

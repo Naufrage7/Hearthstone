@@ -26,7 +26,8 @@ public class Heros implements ICible {
 	 * @param nom
 	 */
 	private void setNom(String nom) {
-		if ( nom == null ) throw new IllegalArgumentException("Le nom du héros ne peut pas être nul !");
+		if (nom == null)
+			throw new IllegalArgumentException("Le nom du héros ne peut pas être nul !");
 		this.nom = nom;
 	}
 
@@ -36,7 +37,8 @@ public class Heros implements ICible {
 	 * @param vie
 	 */
 	private void setVie(int vie) {
-		if ( vie < 0 ) throw new IllegalArgumentException("La vie du héros ne peut pas être une valeur négative !");
+		if (vie < 0)
+			throw new IllegalArgumentException("La vie du héros ne peut pas être une valeur négative !");
 		this.vie = vie;
 	}
 
@@ -62,10 +64,11 @@ public class Heros implements ICible {
 	 * Occasionne des dégats au héros
 	 * 
 	 * @param degats
-	 * @throws MortException 
+	 * @throws MortException
 	 */
 	public void recevoirDegats(int degats) throws HearthstoneException {
-		if ( this.getVie() - degats <= 0 ) throw new MortException();
+		if (this.getVie() - degats <= 0)
+			throw new MortException();
 		this.setVie(this.getVie() - degats);
 	}
 

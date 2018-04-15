@@ -2,7 +2,7 @@ package heros;
 
 import exception.HearthstoneException;
 import exception.MortException;
-import jeu.ICible;
+import cible.ICible;
 
 public class Heros implements ICible {
 

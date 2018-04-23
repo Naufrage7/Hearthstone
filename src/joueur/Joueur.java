@@ -1,0 +1,123 @@
+package joueur;
+
+import java.util.ArrayList;
+
+import carte.ICarte;
+import exception.HearthstoneException;
+import heros.Heros;
+
+public class Joueur implements IJoueur {
+	
+	private String pseudo;
+	private Heros heros;
+	private int mana;
+	private int stockMana;
+	private ArrayList<ICarte> main;
+	private ArrayList<ICarte> jeu;
+
+	/**
+	 * Instancie un Joueur
+	 * 
+	 * @param pseudo le pseudo du joueur
+	 * @param heros le héros du joueur
+	 */
+	public Joueur(String pseudo, Heros heros) {
+		this.setPseudo(pseudo);
+		this.setHeros(heros);
+	}
+	
+	/**
+	 * Attribue le pseudo au joueur
+	 * 
+	 * @param pseudo le pseudo du joueur
+	 */
+	private void setPseudo(String pseudo) {
+		if ( pseudo == null )
+			throw new IllegalArgumentException("Le pseudo du joueur ne peut pas être nul !");
+		this.pseudo = pseudo;
+	}
+	
+	/**
+	 * Attribue le héros au joueur
+	 * 
+	 * @param heros le héros du joueur
+	 */
+	private void setHeros(Heros heros) {
+		if ( heros == null )
+			throw new IllegalArgumentException("Le héros du joueur ne peut pas être nul !");
+		this.heros = heros;
+	}
+	
+	@Override
+	public Heros getHeros() {
+		return this.heros;
+	}
+
+	@Override
+	public String getPseudo() {
+		return this.pseudo;
+	}
+
+	@Override
+	public int getMana() {
+		return mana;
+	}
+
+	@Override
+	public int getStockMana() {
+		return stockMana;
+	}
+
+	@Override
+	public ArrayList<ICarte> getMain() {
+		return null;
+	}
+
+	@Override
+	public ArrayList<ICarte> getJeu() {
+		return null;
+	}
+
+	@Override
+	public ICarte getCarteEnJeu(String nomCarte) {
+		return null;
+	}
+
+	@Override
+	public ICarte getCarteEnMain(String nomCarteMain) {
+		return null;
+	}
+
+	@Override
+	public void prendreTour() throws HearthstoneException {
+	}
+
+	@Override
+	public void finirTour() throws HearthstoneException {
+	}
+
+	@Override
+	public void piocher() throws HearthstoneException {
+	}
+
+	@Override
+	public void jouerCarte(ICarte carte) throws HearthstoneException {
+	}
+
+	@Override
+	public void jouerCarte(ICarte carte, Object cible) throws HearthstoneException {
+	}
+
+	@Override
+	public void utiliserCarte(ICarte carte, Object cible) throws HearthstoneException {
+	}
+
+	@Override
+	public void utiliserPouvoir(Object cible) throws HearthstoneException {
+	}
+
+	@Override
+	public void perdreCarte(ICarte carte) throws HearthstoneException {
+	}
+
+}

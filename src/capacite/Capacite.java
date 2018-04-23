@@ -34,6 +34,11 @@ public class Capacite implements ICapacite {
 		}
 	}
 
+	/**
+	 * Attribue la description de la capactie
+	 * 
+	 * @param description
+	 */
 	private void setDescription(String description) {
 		if (description != null) {
 			this.description = description;
@@ -42,10 +47,16 @@ public class Capacite implements ICapacite {
 		}
 	}
 
+	@Override
 	public String getNom() {
 		return this.nom;
 	}
 
+	/**
+	 * Retourne la description de la capacite
+	 * 
+	 * @return Retourne la description
+	 */
 	public String getDescription() {
 		return this.description;
 	}
@@ -69,8 +80,8 @@ public class Capacite implements ICapacite {
 	@Override
 	public void executerEffetDisparition(Object cible) throws HearthstoneException {
 	}
-	
+
 	public String toString() {
-		return "Capacite [nom="+this.nom+", description="+this.description+"]";
+		return "Capacite [nom=" + this.nom + ", description=" + this.description + "]";
 	}
 }

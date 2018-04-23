@@ -8,7 +8,7 @@ public class Capacite implements ICapacite {
 	private String description;
 
 	/***
-	 * Implémentation du constructeur
+	 * ImplÃ©mentation du constructeur
 	 * 
 	 * @param nom
 	 * @param description
@@ -68,5 +68,9 @@ public class Capacite implements ICapacite {
 
 	@Override
 	public void executerEffetDisparition(Object cible) throws HearthstoneException {
+	}
+	
+	public String toString() {
+		return "Capacite [nom="+this.nom+", description="+this.description+"]";
 	}
 }

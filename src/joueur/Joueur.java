@@ -24,6 +24,9 @@ public class Joueur implements IJoueur {
 	public Joueur(String pseudo, Heros heros) {
 		this.setPseudo(pseudo);
 		this.setHeros(heros);
+		
+		this.main = new ArrayList<ICarte>();
+		this.jeu = new ArrayList<ICarte>();
 	}
 	
 	/**

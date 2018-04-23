@@ -1,5 +1,6 @@
 package carte;
 
+import capacite.Capacite;
 import exception.HearthstoneException;
 import joueur.IJoueur;
 
@@ -52,6 +53,15 @@ public class Carte implements ICarte {
 		if ( proprietaire == null )
 			throw new IllegalArgumentException("Le propriétaire ne peut pas être nul !");
 		this.proprietaire = proprietaire;
+	}
+	
+	/**
+	 * Retourne la capacité de la carte
+	 * 
+	 * @return la capacité de la carte
+	 */
+	public Capacite getCapacite() {
+		return null;
 	}
 	
 	@Override

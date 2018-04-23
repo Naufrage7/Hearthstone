@@ -70,22 +70,38 @@ public class Joueur implements IJoueur {
 
 	@Override
 	public ArrayList<ICarte> getMain() {
-		return null;
+		return this.main;
 	}
 
 	@Override
 	public ArrayList<ICarte> getJeu() {
-		return null;
+		return this.jeu;
 	}
 
 	@Override
 	public ICarte getCarteEnJeu(String nomCarte) {
-		return null;
+		ICarte carte = null;
+		for (ICarte c : jeu) {
+			if ( c.getNom().contains(nomCarte) ) {
+				carte = c;
+				break;
+			}
+		}
+		
+		return carte;
 	}
 
 	@Override
 	public ICarte getCarteEnMain(String nomCarteMain) {
-		return null;
+		ICarte carte = null;
+		for (ICarte c : main) {
+			if ( c.getNom().contains(nomCarteMain) ) {
+				carte = c;
+				break;
+			}
+		}
+		
+		return carte;
 	}
 
 	@Override

@@ -78,10 +78,20 @@ public class Joueur implements IJoueur {
 		this.stockMana = stockMana;
 	}
 	
+	/**
+	 * Attribue la main du joueur
+	 * 
+	 * @param main la main du joueur
+	 */
 	private void setMain(ArrayList<ICarte> main) {
 		this.main = main;
 	}
 	
+	/**
+	 * Attribue le jeu du joueur
+	 * 
+	 * @param jeu le jeu du joueur
+	 */
 	private void setJeu(ArrayList<ICarte> jeu) {
 		this.jeu = jeu;
 	}

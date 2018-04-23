@@ -11,25 +11,24 @@ public class Serviteur extends Carte {
 	 * Constructeur de la classe Serviteur
 	 * 
 	 * @param attaque
-	 * @param pv
+	 * @param vie
 	 * @param nom
 	 * @param cout
 	 * @param proprietaire
 	 */
-	public Serviteur(int attaque, int pv, String nom, int cout, IJoueur proprietaire) {
+	public Serviteur(int attaque, int vie, String nom, int cout, IJoueur proprietaire) {
 		super(nom, cout, proprietaire);
 		this.setAttaque(attaque);
-		this.setVie(pv);
+		this.setVie(vie);
 	}
 
 	/**
-	 * Test si l'attaque n'est pas égale à 0
+	 * Test si l'attaque n'est pas Ã©gale Ã  0
 	 * 
 	 * @param attaque
-	 * @throws IllegalArguementException
 	 */
 	public void setAttaque(int attaque) {
-		if (attaque != 0) {
+		if (attaque >= 0) {
 			this.attaque = attaque;
 		} else {
 			throw new IllegalArgumentException();
@@ -37,14 +36,13 @@ public class Serviteur extends Carte {
 	}
 
 	/**
-	 * Test si la vie n'est pas égale à 0
+	 * Test si la vie n'est pas Ã©gale Ã  0
 	 * 
 	 * @param pv
-	 * @throws IllegalArguementException
 	 */
-	public void setVie(int pv) {
-		if (pv != 0) {
-			this.vie = pv;
+	public void setVie(int vie) {
+		if (vie > 0) {
+			this.vie = vie;
 		} else {
 			throw new IllegalArgumentException();
 		}

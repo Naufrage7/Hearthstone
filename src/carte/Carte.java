@@ -7,22 +7,51 @@ public class Carte implements ICarte {
 	
 	private String nom;
 	private int cout;
+	private IJoueur proprietaire;
 	
-	public Carte(String nom, int cout) {
+	/**
+	 * Instancie une nouvelle Carte
+	 * 
+	 * @param nom le nom de la carte
+	 * @param cout le cout de la carte
+	 */
+	public Carte(String nom, int cout, IJoueur proprietaire) {
 		this.setNom(nom);
 		this.setCout(cout);
+		this.setProprietaire(proprietaire);
 	}
 
+	/**
+	 * Attribue le nom de la carte
+	 * 
+	 * @param nom le nom de la carte
+	 */
 	private void setNom(String nom) {
 		if ( nom == null )
 			throw new IllegalArgumentException("Le nom de la carte ne peut pas être nul !");
 		this.nom = nom;
 	}
 	
+	/**
+	 * Attribue le cout de la carte
+	 * 
+	 * @param cout le cout de la carte
+	 */
 	private void setCout(int cout) {
 		if ( cout < 0 )
 			throw new IllegalArgumentException("Le cout de la carte ne peut pas être une valeur négative !");
 		this.cout = cout;
+	}
+	
+	/**
+	 * Attribue le propriétaire de la carte
+	 * 
+	 * @param proprietaire le propriétaire de la carte
+	 */
+	private void setProprietaire(IJoueur proprietaire) {
+		if ( proprietaire == null )
+			throw new IllegalArgumentException("Le propriétaire ne peut pas être nul !");
+		this.proprietaire = proprietaire;
 	}
 	
 	@Override
@@ -37,43 +66,31 @@ public class Carte implements ICarte {
 
 	@Override
 	public IJoueur getProprietaire() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.proprietaire;
 	}
 
 	@Override
 	public void executerEffetDebutTour(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void executerEffetFinTour(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void executerEffetDisparition(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public boolean disparait() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

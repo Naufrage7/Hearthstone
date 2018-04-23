@@ -54,6 +54,7 @@ public class Plateau implements IPlateau {
 	public void setJoueurCourant(IJoueur joueurCourant) throws HearthstoneException {
 		if ( !this.listeJoueurs.contains(joueurCourant) )
 			throw new HearthstoneException("Le joueur courant doit faire partie de la liste des joueurs du plateau !");
+
 		this.joueurCourant = joueurCourant;
 	}
 
@@ -66,6 +67,7 @@ public class Plateau implements IPlateau {
 	public void ajouterJoueur(IJoueur joueur) throws HearthstoneException {
 		if ( this.listeJoueurs.size() >= 2 )
 			throw new HearthstoneException("Il ne peut y avoir que 2 joueurs sur un plateau !");
+		
 		this.listeJoueurs.add(joueur);
 	}
 
@@ -83,7 +85,12 @@ public class Plateau implements IPlateau {
 
 	@Override
 	public void demarrerPartie() throws HearthstoneException {
+		if ( this.listeJoueurs.size() != 2 )
+			throw new HearthstoneException("Il faut 2 joueurs pour démarrer une partie !");
+		
 		this.setPartieDemarree(true);
+		this.setJoueurCourant(this.listeJoueurs.get(0));
+		this.joueurCourant.prendreTour();
 	}
 
 	@Override
@@ -93,7 +100,9 @@ public class Plateau implements IPlateau {
 
 	@Override
 	public void finTour(IJoueur joueur) throws HearthstoneException {
+		this.joueurCourant.finirTour();
 		this.setJoueurCourant(this.getAdversaire(joueur));
+		this.joueurCourant.prendreTour();
 	}
 
 	@Override

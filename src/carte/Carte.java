@@ -9,18 +9,37 @@ public class Carte implements ICarte {
 	private String nom;
 	private int cout;
 	private IJoueur proprietaire;
+	private Capacite capacite;
 	
 	/**
 	 * Instancie une nouvelle Carte
 	 * 
 	 * @param nom le nom de la carte
 	 * @param cout le cout de la carte
+	 * @param capacite la capacité de la carte
+	 * @param proprietaire le proprietaire de la carte
+	 */
+	public Carte(String nom, int cout, Capacite capacite, IJoueur proprietaire) {
+		this.setNom(nom);
+		this.setCout(cout);
+		this.setProprietaire(proprietaire);
+		this.setCapacite(capacite);
+	}
+	
+	/**
+	 * Instancie une nouvelle Carte
+	 * 
+	 * @param nom le nom de la carte
+	 * @param cout le cout de la carte
+	 * @param proprietaire le proprietaire de la carte
 	 */
 	public Carte(String nom, int cout, IJoueur proprietaire) {
 		this.setNom(nom);
 		this.setCout(cout);
 		this.setProprietaire(proprietaire);
+		this.setCapacite(null);
 	}
+
 
 	/**
 	 * Attribue le nom de la carte
@@ -53,6 +72,15 @@ public class Carte implements ICarte {
 		if ( proprietaire == null )
 			throw new IllegalArgumentException("Le propriétaire ne peut pas être nul !");
 		this.proprietaire = proprietaire;
+	}
+	
+	/**
+	 * Attribue la capacité au sort
+	 * 
+	 * @param capacite la capacité
+	 */
+	private void setCapacite(Capacite capacite) {
+		this.capacite = capacite;
 	}
 	
 	/**
@@ -102,6 +130,10 @@ public class Carte implements ICarte {
 	@Override
 	public boolean disparait() {
 		return false;
+	}
+	
+	public String toString() {
+		return "Carte [nom="+this.nom+", cout="+this.cout+", proprietaire="+this.proprietaire+"]";
 	}
 
 }

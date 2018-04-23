@@ -17,11 +17,19 @@ public class Capacite implements ICapacite {
 	 */
 
 	private void setNom(String nom) {
-		this.nom = nom;
+		if (nom != null) {
+			this.nom = nom;
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	private void setDescription(String description) {
-		this.description = description;
+		if (description != null) {
+			this.description = description;
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public String getNom() {

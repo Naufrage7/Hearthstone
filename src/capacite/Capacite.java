@@ -4,16 +4,32 @@ import exception.HearthstoneException;
 
 public class Capacite implements ICapacite {
 
-	@Override
-	public String getNom() {
-		// TODO Auto-generated method stub
-		return null;
+	private String nom;
+	private String description;
+
+	public Capacite(String nom, String description) {
+		this.setNom(nom);
+		this.setDescription(description);
 	}
 
-	@Override
+	/**
+	 * Getter et Setter
+	 */
+
+	private void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	private void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getNom() {
+		return this.nom;
+	}
+
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.description;
 	}
 
 	@Override

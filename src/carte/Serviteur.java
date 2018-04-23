@@ -10,11 +10,16 @@ public class Serviteur extends Carte {
 	/**
 	 * Constructeur de la classe Serviteur
 	 * 
-	 * @param attaque l'attaque du serviteur
-	 * @param vie la vie du serviteur
-	 * @param nom le nom du serviteur
-	 * @param cout le cout du serviteur
-	 * @param proprietaire le propriétaire du serviteur
+	 * @param attaque
+	 *            l'attaque du serviteur
+	 * @param vie
+	 *            la vie du serviteur
+	 * @param nom
+	 *            le nom du serviteur
+	 * @param cout
+	 *            le cout du serviteur
+	 * @param proprietaire
+	 *            le propriétaire du serviteur
 	 */
 	public Serviteur(int attaque, int vie, String nom, int cout, IJoueur proprietaire) {
 		super(nom, cout, proprietaire);
@@ -25,7 +30,8 @@ public class Serviteur extends Carte {
 	/**
 	 * Attribue l'attaque du serviteur
 	 * 
-	 * @param attaque l'attaque du serviteur
+	 * @param attaque
+	 *            l'attaque du serviteur
 	 */
 	public void setAttaque(int attaque) {
 		if (attaque >= 0) {
@@ -38,7 +44,8 @@ public class Serviteur extends Carte {
 	/**
 	 * Attribue la vie du serviteur
 	 * 
-	 * @param vie la vie du serviteur
+	 * @param vie
+	 *            la vie du serviteur
 	 */
 	public void setVie(int vie) {
 		if (vie >= 0) {
@@ -64,5 +71,15 @@ public class Serviteur extends Carte {
 	 */
 	public int getVie() {
 		return this.vie;
+	}
+
+	/**
+	 * Retourne le toString de Serviteur
+	 * 
+	 * @return le string de l'attaque, la vie , le nom , le cout et le
+	 *         propriétaire
+	 */
+	public String toString() {
+		return "L'attaque = [" + this.attaque + "], la vie = [" + this.vie + "] " + super.toString() + " !";
 	}
 }

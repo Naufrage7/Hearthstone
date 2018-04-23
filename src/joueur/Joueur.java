@@ -24,11 +24,13 @@ public class Joueur implements IJoueur {
 	public Joueur(String pseudo, Heros heros) {
 		this.setPseudo(pseudo);
 		this.setHeros(heros);
+		this.setMana(0);
+		this.setStockMana(0);
 		
 		this.main = new ArrayList<ICarte>();
 		this.jeu = new ArrayList<ICarte>();
 	}
-	
+
 	/**
 	 * Attribue le pseudo au joueur
 	 * 
@@ -51,6 +53,32 @@ public class Joueur implements IJoueur {
 		this.heros = heros;
 	}
 	
+	/**
+	 * Attribue une quantité de mana au héros
+	 * 
+	 * @param mana la quantité de mana
+	 */
+	private void setMana(int mana) {
+		if ( mana < 0 )
+			throw new IllegalArgumentException("Le mana ne peut pas être une valeur négative !");
+		else if ( mana > IJoueur.MAX_MANA )
+			throw new IllegalArgumentException("Le mana ne peut pas dépasser " + IJoueur.MAX_MANA + " !");
+		this.mana = mana;
+	}
+	
+	/**
+	 * Attribue une quantité au stock de mana
+	 * 
+	 * @param stockMana la quantité du stock de mana
+	 */
+	private void setStockMana(int stockMana) {
+		if ( stockMana < 0 )
+			throw new IllegalArgumentException("Le stock de mana ne peut pas être une valeur négative !");
+		else if ( stockMana > mana )
+			throw new IllegalArgumentException("Le stock de mana ne peut pas être supérieur au mana !");
+		this.stockMana = stockMana;
+	}
+	
 	@Override
 	public Heros getHeros() {
 		return this.heros;
@@ -63,12 +91,12 @@ public class Joueur implements IJoueur {
 
 	@Override
 	public int getMana() {
-		return mana;
+		return this.mana;
 	}
 
 	@Override
 	public int getStockMana() {
-		return stockMana;
+		return this.stockMana;
 	}
 
 	@Override
@@ -109,6 +137,9 @@ public class Joueur implements IJoueur {
 
 	@Override
 	public void prendreTour() throws HearthstoneException {
+		if ( this.mana < IJoueur.MAX_MANA )
+			this.setMana(this.mana + 1);
+		this.stockMana = this.mana;
 	}
 
 	@Override
@@ -121,10 +152,14 @@ public class Joueur implements IJoueur {
 
 	@Override
 	public void jouerCarte(ICarte carte) throws HearthstoneException {
+		if ( carte.getCout() > this.stockMana )
+			throw new HearthstoneException("Impossible de jouer une carte coutant plus de mana que le joueur n'en possède");
 	}
 
 	@Override
 	public void jouerCarte(ICarte carte, Object cible) throws HearthstoneException {
+		if ( carte.getCout() > this.stockMana )
+			throw new HearthstoneException("Impossible de jouer une carte coutant plus de mana que le joueur n'en possède");
 	}
 
 	@Override

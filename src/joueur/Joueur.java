@@ -26,9 +26,8 @@ public class Joueur implements IJoueur {
 		this.setHeros(heros);
 		this.setMana(0);
 		this.setStockMana(0);
-		
-		this.main = new ArrayList<ICarte>();
-		this.jeu = new ArrayList<ICarte>();
+		this.setMain(new ArrayList<ICarte>());
+		this.setJeu(new ArrayList<ICarte>());
 	}
 
 	/**
@@ -77,6 +76,14 @@ public class Joueur implements IJoueur {
 		else if ( stockMana > mana )
 			throw new IllegalArgumentException("Le stock de mana ne peut pas être supérieur au mana !");
 		this.stockMana = stockMana;
+	}
+	
+	private void setMain(ArrayList<ICarte> main) {
+		this.main = main;
+	}
+	
+	private void setJeu(ArrayList<ICarte> jeu) {
+		this.jeu = jeu;
 	}
 	
 	@Override

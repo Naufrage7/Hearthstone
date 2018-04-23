@@ -22,7 +22,8 @@ public class Plateau implements IPlateau {
 	/**
 	 * Attribue l'état de la partie
 	 * 
-	 * @param partieDemarree l'état de la partie
+	 * @param partieDemarree
+	 *            l'état de la partie
 	 */
 	private void setPartieDemarree(boolean partieDemarree) {
 		this.partieDemarree = partieDemarree;
@@ -31,7 +32,8 @@ public class Plateau implements IPlateau {
 	/**
 	 * Attribue la liste de joueurs
 	 * 
-	 * @param listeJoueurs la liste de joueurs
+	 * @param listeJoueurs
+	 *            la liste de joueurs
 	 */
 	private void setListeJoueurs(ArrayList<IJoueur> listeJoueurs) {
 		if (listeJoueurs != null) {
@@ -40,7 +42,7 @@ public class Plateau implements IPlateau {
 			throw new IllegalArgumentException("La liste de joueurs ne peut pas être nulle !");
 		}
 	}
-	
+
 	/**
 	 * Retourne la liste des joueurs
 	 * 
@@ -52,7 +54,7 @@ public class Plateau implements IPlateau {
 
 	@Override
 	public void setJoueurCourant(IJoueur joueurCourant) throws HearthstoneException {
-		if ( !this.listeJoueurs.contains(joueurCourant) )
+		if (!this.listeJoueurs.contains(joueurCourant))
 			throw new HearthstoneException("Le joueur courant doit faire partie de la liste des joueurs du plateau !");
 
 		this.joueurCourant = joueurCourant;
@@ -65,29 +67,29 @@ public class Plateau implements IPlateau {
 
 	@Override
 	public void ajouterJoueur(IJoueur joueur) throws HearthstoneException {
-		if ( this.listeJoueurs.size() >= 2 )
+		if (this.listeJoueurs.size() >= 2)
 			throw new HearthstoneException("Il ne peut y avoir que 2 joueurs sur un plateau !");
-		
+
 		this.listeJoueurs.add(joueur);
 	}
 
 	@Override
 	public IJoueur getAdversaire(IJoueur joueur) throws HearthstoneException {
-		if ( this.listeJoueurs.size() != 2 )
+		if (this.listeJoueurs.size() != 2)
 			throw new HearthstoneException("Il faut deux joueurs pour retourner l'adversaire d'un joueur !");
-		
+
 		IJoueur adversaire = this.listeJoueurs.get(0);
-		if ( adversaire == this.getJoueurCourant() ) 
+		if (adversaire == this.getJoueurCourant())
 			adversaire = this.listeJoueurs.get(1);
-		
+
 		return adversaire;
 	}
 
 	@Override
 	public void demarrerPartie() throws HearthstoneException {
-		if ( this.listeJoueurs.size() != 2 )
+		if (this.listeJoueurs.size() != 2)
 			throw new HearthstoneException("Il faut 2 joueurs pour démarrer une partie !");
-		
+
 		this.setPartieDemarree(true);
 		this.setJoueurCourant(this.listeJoueurs.get(0));
 		this.joueurCourant.prendreTour();
@@ -107,6 +109,17 @@ public class Plateau implements IPlateau {
 
 	@Override
 	public void gagnePartie(IJoueur joueur) throws HearthstoneException {
+	}
+
+	/**
+	 * Fonction toString de Plateau
+	 * 
+	 * @return retourne la liste des joueurs , le joueur courant et si la partis
+	 *         et demarree
+	 */
+	public String toString() {
+		return "Plateau [listeJoueurs=" + this.listeJoueurs + ", joueurCourant=" + this.joueurCourant
+				+ ", partieDemarree=" + this.partieDemarree + "]";
 	}
 
 }

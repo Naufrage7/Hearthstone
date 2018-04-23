@@ -80,6 +80,6 @@ public class Serviteur extends Carte {
 	 *         propriétaire
 	 */
 	public String toString() {
-		return "L'attaque = [" + this.attaque + "], la vie = [" + this.vie + "] " + super.toString() + " !";
+		return super.toString() + " -> Serviteur [attaque=" + this.attaque + ", vie=" + this.vie + "]";
 	}
 }

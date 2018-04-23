@@ -135,5 +135,9 @@ public class Joueur implements IJoueur {
 	@Override
 	public void perdreCarte(ICarte carte) throws HearthstoneException {
 	}
+	
+	public String toString() {
+		return "Joueur [pseudo="+this.pseudo+", mana="+this.mana+", stockMana="+this.stockMana+", heros="+this.heros+", main="+this.main+", jeu="+this.jeu+"]";
+	}
 
 }

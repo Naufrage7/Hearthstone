@@ -93,5 +93,9 @@ public class Heros implements ICible {
 			throw new MortException();
 		this.setVie(this.getVie() - degats);
 	}
+	
+	public String toString() {
+		return "Heros [nom="+this.nom+", vie="+this.vie+", pouvoir="+this.pouvoir+"]";
+	}
 
 }

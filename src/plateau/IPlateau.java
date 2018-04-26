@@ -5,7 +5,7 @@ import joueur.IJoueur;
 
 /**
  * Le plateau gère toute la partie, notamment le début et la fin de partie. Il
- * sait qui est le joueur 005 * courant, qui est l'adversaire d'un joueur, etc.
+ * sait qui est le joueur courant, qui est l'adversaire d'un joueur, etc.
  * Il n'y a qu'un seul plateau en tout et pour tout. Je vous conseille de faire
  * quelques recherche sur le design pattern 'Singleton'...
  * 

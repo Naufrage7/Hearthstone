@@ -20,8 +20,7 @@ public class Plateau implements IPlateau {
 		this.setPartieDemarree(false);
 	}
 	
-	public static Plateau getInstance()
-    {
+	public static Plateau getInstance() {
 		return INSTANCE;
     }
 

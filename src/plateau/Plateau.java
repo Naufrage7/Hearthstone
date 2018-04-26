@@ -7,6 +7,7 @@ import joueur.IJoueur;
 
 public class Plateau implements IPlateau {
 
+	private static Plateau INSTANCE = new Plateau();
 	private ArrayList<IJoueur> listeJoueurs;
 	private IJoueur joueurCourant;
 	private boolean partieDemarree;
@@ -14,10 +15,15 @@ public class Plateau implements IPlateau {
 	/**
 	 * Instancie un nouveau Plateau
 	 */
-	public Plateau() {
+	private Plateau() {
 		this.setListeJoueurs(new ArrayList<IJoueur>());
 		this.setPartieDemarree(false);
 	}
+	
+	public static Plateau getInstance()
+    {
+		return INSTANCE;
+    }
 
 	/**
 	 * Attribue l'état de la partie

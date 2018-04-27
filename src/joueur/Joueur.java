@@ -2,6 +2,7 @@ package joueur;
 
 import java.util.ArrayList;
 
+import capacite.Charge;
 import carte.ICarte;
 import carte.Serviteur;
 import exception.HearthstoneException;
@@ -190,10 +191,19 @@ public class Joueur implements IJoueur {
 		if ( this.mana < IJoueur.MAX_MANA )
 			this.setMana(this.mana + 1);
 		this.stockMana = this.mana;
+		
+		this.piocher();
 	}
 
 	@Override
 	public void finirTour() throws HearthstoneException {
+		for ( ICarte c : this.jeu ) {
+			if ( c instanceof Serviteur ) {
+				Serviteur s = (Serviteur) c;
+				if ( !s.peutAttaquer() )
+					s.setPeutAttaquer(true);
+			}
+		}
 	}
 
 	@Override
@@ -209,6 +219,10 @@ public class Joueur implements IJoueur {
 	public void jouerCarte(ICarte carte) throws HearthstoneException {
 		if ( carte.getCout() > this.stockMana )
 			throw new HearthstoneException("Impossible de jouer une carte coutant plus de mana que le joueur n'en possède");
+		
+		this.main.remove(carte);
+		this.jeu.add(carte);
+		carte.executerEffetDebutMiseEnJeu(carte);
 	}
 
 	@Override

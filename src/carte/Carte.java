@@ -89,7 +89,7 @@ public class Carte implements ICarte {
 	 * @return la capacité de la carte
 	 */
 	public Capacite getCapacite() {
-		return null;
+		return this.capacite;
 	}
 	
 	@Override
@@ -117,6 +117,8 @@ public class Carte implements ICarte {
 
 	@Override
 	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
+		if ( this.capacite != null )
+			this.capacite.executerEffetMiseEnJeu(cible);
 	}
 
 	@Override
@@ -133,7 +135,7 @@ public class Carte implements ICarte {
 	}
 	
 	public String toString() {
-		return "Carte [nom="+this.nom+", cout="+this.cout+", proprietaire="+this.proprietaire+"]";
+		return "Carte [nom="+this.nom+", cout="+this.cout+", capacite="+this.capacite+", proprietaire="+this.proprietaire.getPseudo()+"]";
 	}
 
 }

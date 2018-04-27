@@ -1,5 +1,6 @@
 package carte;
 
+import capacite.Capacite;
 import joueur.IJoueur;
 
 public class Serviteur extends Carte {
@@ -28,6 +29,30 @@ public class Serviteur extends Carte {
 		this.setVie(vie);
 		this.setPeutAttaquer(false);
 	}
+	
+	/**
+	 * Constructeur de la classe Serviteur
+	 * 
+	 * @param attaque
+	 *            l'attaque du serviteur
+	 * @param vie
+	 *            la vie du serviteur
+	 * @param nom
+	 *            le nom du serviteur
+	 * @param cout
+	 *            le cout du serviteur
+	 * @param capacite
+	 * 			  la capacité du serviteur
+	 * @param proprietaire
+	 *            le propriétaire du serviteur
+	 */
+	public Serviteur(int attaque, int vie, String nom, int cout, Capacite capacite, IJoueur proprietaire) {
+		super(nom, cout, capacite, proprietaire);
+		this.setAttaque(attaque);
+		this.setVie(vie);
+		this.setPeutAttaquer(false);
+	}
+
 
 	/**
 	 * Attribue l'attaque du serviteur

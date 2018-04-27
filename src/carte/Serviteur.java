@@ -6,6 +6,7 @@ public class Serviteur extends Carte {
 
 	private int attaque;
 	private int vie;
+	private boolean peutAttaquer;
 
 	/**
 	 * Constructeur de la classe Serviteur
@@ -25,6 +26,7 @@ public class Serviteur extends Carte {
 		super(nom, cout, proprietaire);
 		this.setAttaque(attaque);
 		this.setVie(vie);
+		this.setPeutAttaquer(false);
 	}
 
 	/**
@@ -56,6 +58,13 @@ public class Serviteur extends Carte {
 	}
 
 	/**
+	 * Attribue la possibilite d'attaquer pour un serviteur
+	 */
+	public void setPeutAttaquer(boolean peutAttaquer) {
+		this.peutAttaquer = peutAttaquer;
+	}
+
+	/**
 	 * Retourne l'attaque du serviteur
 	 * 
 	 * @return attaque l'attaque du serviteur
@@ -71,6 +80,15 @@ public class Serviteur extends Carte {
 	 */
 	public int getVie() {
 		return this.vie;
+	}
+
+	/**
+	 * Retourne la possibilite au serviteur d'attaquer
+	 * 
+	 * @return la possibilite au serviteur d'attaquer
+	 */
+	public boolean peutAttaquer() {
+		return this.peutAttaquer;
 	}
 
 	/**

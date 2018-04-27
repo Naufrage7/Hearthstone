@@ -1,5 +1,8 @@
 package capacite;
 
+import carte.Serviteur;
+import exception.HearthstoneException;
+
 public class Charge extends Capacite {
 
 	/**
@@ -12,6 +15,14 @@ public class Charge extends Capacite {
 	 */
 	public Charge(String nom, String description) {
 		super(nom, description);
+	}
+
+	/**
+	 * Permet au serviteur d'attaquer s'il dispose de la capacité charge
+	 */
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+		Serviteur s = (Serviteur) cible;
+		s.setPeutAttaquer(true);
 	}
 
 	/**

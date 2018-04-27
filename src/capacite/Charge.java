@@ -7,14 +7,9 @@ public class Charge extends Capacite {
 
 	/**
 	 * Instancie une classe charge
-	 * 
-	 * @param nom
-	 *            de la carte
-	 * @param description
-	 *            de la carte
 	 */
-	public Charge(String nom, String description) {
-		super(nom, description);
+	public Charge() {
+		super("Charge", "Cette capacité permet à un serviteur de ne pas attendre avant d'attaquer");
 	}
 
 	/**

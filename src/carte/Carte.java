@@ -109,10 +109,14 @@ public class Carte implements ICarte {
 
 	@Override
 	public void executerEffetDebutTour(Object cible) throws HearthstoneException {
+		if ( this.capacite != null )
+			this.capacite.executerEffetDebutTour();
 	}
 
 	@Override
 	public void executerEffetFinTour(Object cible) throws HearthstoneException {
+		if ( this.capacite != null )
+			this.capacite.executerEffetFinTour();
 	}
 
 	@Override
@@ -123,6 +127,8 @@ public class Carte implements ICarte {
 
 	@Override
 	public void executerEffetDisparition(Object cible) throws HearthstoneException {
+		if ( this.capacite != null )
+			this.capacite.executerEffetDisparition(cible);
 	}
 
 	@Override

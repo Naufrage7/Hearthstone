@@ -19,12 +19,15 @@ public class Capacite implements ICapacite {
 		this.setDescription(description);
 	}
 
+	public Capacite(Capacite capacite) {
+		this.setNom(capacite.getNom());
+		this.setDescription(capacite.getDescription());
+	}
+
 	/***
-	 * Getter et Setter
+	 * Attribue le nom de la capacité
 	 * 
-	 * @param nom
-	 * @param description
-	 * @throws IllegalArgumentException
+	 * @param nom Le nom de la capacité
 	 */
 	private void setNom(String nom) {
 		if (nom != null) {

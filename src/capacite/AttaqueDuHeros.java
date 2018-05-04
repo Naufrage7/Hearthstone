@@ -3,8 +3,8 @@ package capacite;
 public class AttaqueDuHeros extends Capacite {
 	private int degats;
 	
-	public AttaqueDuHeros(int degats) {
-		super("Attaque du héros", "Cette capacité permet à la carte qui la possède, d'attaquer le héros adverse, en toute circonstance, y compris lorsque le héros est protégé par la provocation.");
+	public AttaqueDuHeros(String nom, int degats) {
+		super(nom, "Inflige " + degats + " de dégats au héros adverse");
 		this.setDegats(degats);
 	}
 	

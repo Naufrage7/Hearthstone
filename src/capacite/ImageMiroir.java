@@ -6,8 +6,15 @@ import plateau.IPlateau;
 import plateau.Plateau;
 
 public class ImageMiroir extends Capacite {
-	public ImageMiroir() {
-		super("Image miroir", "C'est aussi une capacité de la famille des invocations de serviteurs. Elle est propre à Jaina. La carte possédant cette capacité invoque automatiquement, au début du tour, deux serviteurs 0/+2 avec la capacité \"Provocation\"");
+	private Serviteur serviteur;
+	
+	public ImageMiroir(String nom, Serviteur serviteur) {
+		super(nom, "Invoque 2 fois un serviteur");
+		this.setServiteur(serviteur);
+	}
+	
+	private void setServiteur(Serviteur serviteur) {
+		this.serviteur = serviteur;
 	}
 	
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
@@ -15,6 +22,6 @@ public class ImageMiroir extends Capacite {
 		IJoueur joueurCourant = plateau.getJoueurCourant();
 		
 		for ( int i = 0; i < 2; i++ )
-			joueurCourant.getJeu().add(new Serviteur(0, 2, "L'ombre miroir", 0, new Provocation(), joueurCourant));
+			joueurCourant.getJeu().add(new Serviteur(serviteur));
 	}
 }

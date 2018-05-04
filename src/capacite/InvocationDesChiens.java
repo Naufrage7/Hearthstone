@@ -17,8 +17,7 @@ public class InvocationDesChiens extends Capacite {
 		IJoueur joueurCourant = plateau.getJoueurCourant();
 		IJoueur joueurAdverse = plateau.getAdversaire(joueurCourant);
 		
-		for ( ICarte c : joueurAdverse.getJeu() ) {
+		for ( ICarte c : joueurAdverse.getJeu() )
 			joueurCourant.getJeu().add(new Serviteur(1, 1, "Chien de Rexxar", 0, new Charge(), joueurCourant));
-		}
 	}
 }

@@ -1,5 +1,7 @@
 package capacite;
 
+import java.util.ArrayList;
+
 import carte.ICarte;
 import carte.Serviteur;
 import exception.HearthstoneException;
@@ -8,19 +10,29 @@ import plateau.IPlateau;
 import plateau.Plateau;
 
 public class EffetPermanent extends Capacite {
-	public EffetPermanent(String nom, String description) {
-		super(nom, description);
+	private ArrayList<Serviteur> serviteursAffectes;
+	
+	public EffetPermanent(String nom, int attaque, int defense) {
+		super(nom, "Effet permanent sur les autres serviteurs alliés donnant un bonus " + attaque + "/" + defense);
+		this.setServiteursAffectes(new ArrayList<Serviteur>());
 	}
 	
-	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+	private void setServiteursAffectes(ArrayList<Serviteur> serviteursAffectes) {
+		this.serviteursAffectes = serviteursAffectes;
+	}
+
+	public void executerEffetDebutTour() throws HearthstoneException {
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurCourant = plateau.getJoueurCourant();
 		
 		for ( ICarte c : joueurCourant.getJeu() ) {
 			if ( c instanceof Serviteur ) {
 				Serviteur s = (Serviteur) c;
-				s.setAttaque(s.getAttaque() + 1);
-				s.setVie(s.getVie() + 1);
+				if ( !this.serviteursAffectes.contains(s) ) {
+					s.setAttaque(s.getAttaque() + 1);
+					s.setVie(s.getVie() + 1);
+					this.serviteursAffectes.add(s);
+				}
 			}
 		}
 	}
@@ -32,8 +44,10 @@ public class EffetPermanent extends Capacite {
 		for ( ICarte c : joueurCourant.getJeu() ) {
 			if ( c instanceof Serviteur ) {
 				Serviteur s = (Serviteur) c;
-				s.setAttaque(s.getAttaque() - 1);
-				s.setVie(s.getVie() - 1);
+				if ( this.serviteursAffectes.contains(s) ) {
+					s.setAttaque(s.getAttaque() - 1);
+					s.setVie(s.getVie() - 1);
+				}
 			}
 		}
 	}

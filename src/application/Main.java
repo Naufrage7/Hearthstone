@@ -1,7 +1,10 @@
 package application;
 
+import capacite.AttaqueCiblee;
 import capacite.Capacite;
 import carte.ICarte;
+import carte.Serviteur;
+import carte.Sort;
 import exception.HearthstoneException;
 import heros.Heros;
 import joueur.Joueur;
@@ -12,8 +15,8 @@ public class Main {
 	public static void main(String[] args) {
 		Plateau plateau = Plateau.getInstance();
 		
-		Joueur j1 = new Joueur("Théo", new Heros("Jaina", 15, new Capacite("Ne rien faire", "Ne fait rien")));
-		Joueur j2 = new Joueur("Alex", new Heros("Rexxor", 15, new Capacite("Ne rien faire", "Ne fait rien")));
+		Joueur j1 = new Joueur("Théo", new Heros("Jaina", 15, new AttaqueCiblee("Boule de feu", 1)));
+		Joueur j2 = new Joueur("Alex", new Heros("Rexxar", 15, new AttaqueCiblee("Petite flèche", 1)));
 		
 		try {
 			plateau.ajouterJoueur(j1);
@@ -21,33 +24,40 @@ public class Main {
 			
 			plateau.demarrerPartie();
 			
-			for ( int i = 0; i < 6; i++ ) {	
+			while ( true ) {
 				Joueur joueurCourant = (Joueur) plateau.getJoueurCourant();
-				System.out.println("==== " + joueurCourant.getPseudo() + " ====");
-				
 				joueurCourant.prendreTour();
 				
-				ICarte carteAJouer = joueurCourant.getMain().get(0);
-				if ( carteAJouer.getCout() <= joueurCourant.getMana() )
-					joueurCourant.jouerCarte(carteAJouer);
 				
-				System.out.println("Carte(s) en main :");
+				System.out.println("**************************************************");
+				System.out.println(joueurCourant.getPseudo() + " joue " + joueurCourant.getHeros().getNom() + " ( " + joueurCourant.getHeros().getVie() + " points de vie restants )");
+				System.out.println("Stock de mana : " + joueurCourant.getStockMana());
+				System.out.println("Pouvoir du héros : " + joueurCourant.getHeros().getPouvoir().getNom() + " ( " + joueurCourant.getHeros().getPouvoir().getDescription() + " )");
+				System.out.println("\n### Contenu de ma main ###");
+				System.out.println("##########################");
+				
 				if ( joueurCourant.getMain().isEmpty() ) {
-					System.out.println(" - ( Rien )");
+					System.out.println("## VIDE");
 				} else {
-					for ( ICarte c : joueurCourant.getMain() ) {
-						System.out.println(" - ( " + c.getCout() + " ) " + c.getNom());
+					for ( ICarte carte : joueurCourant.getMain() ) {
+						if ( carte instanceof Serviteur ) {
+							Serviteur serviteur = (Serviteur) carte;
+							System.out.println("## SERVITEUR " + serviteur.getNom() + " " + serviteur.getAttaque() + "/" + serviteur.getVie());
+							
+						} else if ( carte instanceof Sort ) {
+							Sort sort = (Sort) carte;
+							System.out.println("## SORT      " + sort.getNom() + " : " + sort.getCapacite().getDescription());
+						}
 					}
 				}
 				
-				System.out.println("Carte(s) en jeu :");
-				if ( joueurCourant.getJeu().isEmpty() ) {
-					System.out.println(" - ( Rien )");
-				} else {
-					for ( ICarte c : joueurCourant.getJeu() ) {
-						System.out.println(" - " + c.getNom());
-					}
-				}
+				System.out.println("##########################");
+
+				System.out.println("\nActions disponibles :");
+				System.out.println(" - 1. Finir le tour");
+				System.out.println(" - 2. Jouer une carte de ma main");
+				System.out.println(" - 3. Utiliser une carte en jeu");
+				System.out.println(" - 4. Utiliser le pouvoir du héros");
 				
 				joueurCourant.finirTour();
 				

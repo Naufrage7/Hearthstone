@@ -54,6 +54,13 @@ public class Serviteur extends Carte {
 	}
 
 
+	public Serviteur(Serviteur serviteur) {
+		super(serviteur.getNom(), serviteur.getCout(), new Capacite(serviteur.getCapacite()), serviteur.getProprietaire());
+		this.setAttaque(serviteur.getAttaque());
+		this.setVie(serviteur.getVie());
+		this.setPeutAttaquer(false);
+	}
+
 	/**
 	 * Attribue l'attaque du serviteur
 	 * 

@@ -13,7 +13,7 @@ public class Sort extends Carte {
 	 * @param proprietaire le propriétaire de la carte
 	 * @param capacite la capacité représentant le sort
 	 */
-	public Sort(String nom, int cout, IJoueur proprietaire, Capacite capacite) {
+	public Sort(String nom, int cout, Capacite capacite, IJoueur proprietaire) {
 		super(nom, cout, capacite, proprietaire);
 	}
 	

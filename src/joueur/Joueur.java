@@ -2,9 +2,15 @@ package joueur;
 
 import java.util.ArrayList;
 
+import capacite.AttaqueCiblee;
+import capacite.AttaqueDuHeros;
 import capacite.Charge;
+import capacite.EffetPermanent;
+import capacite.InvocationDeServiteurs;
+import capacite.Provocation;
 import carte.ICarte;
 import carte.Serviteur;
+import carte.Sort;
 import exception.HearthstoneException;
 import heros.Heros;
 
@@ -120,14 +126,16 @@ public class Joueur implements IJoueur {
 	private void initialiserDeck() {
 		this.setDeck(new ArrayList<ICarte>());
 		this.deck.add(new Serviteur(2, 1, "Chasse-marée murloc", 2, this));
-		this.deck.add(new Serviteur(6, 6, "Champion de Hurlevent", 7, this));
-		this.deck.add(new Serviteur(2, 2, "Chef de raid", 3, this));
-		this.deck.add(new Serviteur(5, 4, "Garde de Baie-du-butin", 5, this));
-		this.deck.add(new Serviteur(5, 2, "La missilière téméraire", 6, this));
-		this.deck.add(new Serviteur(4, 4, "L'orgre-magi", 4, this));
-		this.deck.add(new Serviteur(4, 7, "Archimage", 6, this));
-		this.deck.add(new Serviteur(1, 1, "Gnôme lépreux", 1, this));
-		this.deck.add(new Serviteur(2, 3, "Golem des moissons", 3, this));
+		this.deck.add(new Sort("Charge", 1, new Charge(), this));
+		this.deck.add(new Sort("Attaque mentale", 2, new AttaqueDuHeros(5), this));
+		this.deck.add(new Serviteur(6, 6, "Champion de Hurlevent", 7, new EffetPermanent("Bonus de hurlevent", "Effet permanent sur les autres serviteurs alliés donnant un bonus +1/+1"),this));
+		this.deck.add(new Serviteur(2, 2, "Chef de raid", 3, new EffetPermanent("Bonus du chef de raid", "Effet permanent sur les autres serviteurs alliés donnant un bonus +1/0"), this));
+		this.deck.add(new Serviteur(5, 4, "Garde de Baie-du-butin", 5, new Provocation(), this));
+		this.deck.add(new Serviteur(5, 2, "La missilière téméraire", 6, new Charge(), this));
+		this.deck.add(new Serviteur(4, 4, "L'orgre-magi", 4, new Provocation(), this));
+		this.deck.add(new Serviteur(4, 7, "Archimage", 6, new Provocation(), this));
+		this.deck.add(new Serviteur(1, 1, "Gnôme lépreux", 1, new AttaqueCiblee("Attaque du lépreux", 2), this));
+		this.deck.add(new Serviteur(2, 3, "Golem des moissons", 3, new InvocationDeServiteurs("Golémisation", "Invoque un \"Golem endomagé\" +2/+1 qui n'a aucune capacité", new Serviteur(2, 1, "Golem endomagé", 0, this)), this));
 	}
 	
 	@Override

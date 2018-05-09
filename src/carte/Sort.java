@@ -17,4 +17,8 @@ public class Sort extends Carte {
 		super(nom, cout, capacite, proprietaire);
 	}
 	
+	public String toString() {
+		return this.getNom() + " ( " + this.getCapacite().getDescription() + " )";
+	}
+	
 }

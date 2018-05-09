@@ -122,6 +122,10 @@ public class Serviteur extends Carte {
 	public boolean peutAttaquer() {
 		return this.peutAttaquer;
 	}
+	
+	public boolean disparait() {
+		return this.vie <= 0;
+	}
 
 	/**
 	 * Retourne le toString de Serviteur
@@ -130,6 +134,12 @@ public class Serviteur extends Carte {
 	 *         propriétaire
 	 */
 	public String toString() {
-		return super.toString() + " -> Serviteur [attaque=" + this.attaque + ", vie=" + this.vie + "]";
+		String toString = "";
+		toString += this.getNom() + " " + this.getAttaque() + "/" + this.getVie();
+		if ( this.getCapacite() != null )
+			toString += " ( " + this.getCapacite().getNom() + " : " + this.getCapacite().getDescription() + " )";
+		else
+			toString += " ( Sans capacité )";
+		return toString;
 	}
 }

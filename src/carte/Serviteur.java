@@ -1,9 +1,10 @@
 package carte;
 
 import capacite.Capacite;
+import cible.ICible;
 import joueur.IJoueur;
 
-public class Serviteur extends Carte {
+public class Serviteur extends Carte implements ICible {
 
 	private int attaque;
 	private int vie;
@@ -85,7 +86,7 @@ public class Serviteur extends Carte {
 		if (vie >= 0) {
 			this.vie = vie;
 		} else {
-			throw new IllegalArgumentException("La vie du serviteur ne peut pas être une valeur négative !");
+			vie = 0;
 		}
 	}
 
@@ -126,6 +127,10 @@ public class Serviteur extends Carte {
 	public boolean disparait() {
 		return this.vie <= 0;
 	}
+	
+	public void recevoirDegats(int degats) {
+		this.setVie(this.getVie() - degats);
+	}
 
 	/**
 	 * Retourne le toString de Serviteur
@@ -140,6 +145,6 @@ public class Serviteur extends Carte {
 			toString += " ( " + this.getCapacite().getNom() + " : " + this.getCapacite().getDescription() + " )";
 		else
 			toString += " ( Sans capacité )";
-		return toString;
+		return super.toString() + toString;
 	}
 }

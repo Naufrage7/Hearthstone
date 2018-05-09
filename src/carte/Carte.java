@@ -141,7 +141,7 @@ public class Carte implements ICarte {
 	}
 	
 	public String toString() {
-		return "Carte [nom="+this.nom+", cout="+this.cout+", capacite="+this.capacite+", proprietaire="+this.proprietaire.getPseudo()+"]";
+		return "(" + getCout() + ") ";
 	}
 
 }

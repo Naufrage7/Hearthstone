@@ -9,7 +9,7 @@ public class MarqueDuChasseur extends Capacite {
 		super(nom, "Réduit la vie d'un serviteur à 1");
 	}
 	
-	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+	public void executerAction(Object cible) throws HearthstoneException {
 		if ( !(cible instanceof Serviteur) )
 			throw new HearthstoneException("Cette capacité ne s'utilise que sur un serviteur !");
 		

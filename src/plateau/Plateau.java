@@ -97,6 +97,7 @@ public class Plateau implements IPlateau {
 
 		this.setPartieDemarree(true);
 		this.setJoueurCourant(this.listeJoueurs.get(0));
+		this.getJoueurCourant().prendreTour();
 	}
 
 	@Override

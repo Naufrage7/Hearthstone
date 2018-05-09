@@ -18,7 +18,7 @@ public class InvocationDeServiteurs extends Capacite {
 		this.serviteur = serviteur;
 	}
 	
-	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+	public void executerAction(Object cible) throws HearthstoneException {
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurCourant = plateau.getJoueurCourant();	
 		joueurCourant.getJeu().add(this.serviteur);

@@ -15,7 +15,7 @@ public class Charge extends Capacite {
 	/**
 	 * Permet au serviteur d'attaquer s'il dispose de la capacité charge
 	 */
-	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+	public void executerAction(Object cible) throws HearthstoneException {
 		if ( !(cible instanceof Serviteur) ) 
 			throw new HearthstoneException("La cible ne peut être qu'un serviteur !");
 		

@@ -41,8 +41,9 @@ public class Heros implements ICible {
 	 */
 	private void setVie(int vie) {
 		if (vie < 0)
-			throw new IllegalArgumentException("La vie du héros ne peut pas être une valeur négative !");
-		this.vie = vie;
+			this.vie = 0;
+		else
+			this.vie = vie;
 	}
 	
 	/**
@@ -89,8 +90,6 @@ public class Heros implements ICible {
 	 * @throws MortException
 	 */
 	public void recevoirDegats(int degats) throws HearthstoneException {
-		if (this.getVie() - degats <= 0)
-			throw new MortException();
 		this.setVie(this.getVie() - degats);
 	}
 	

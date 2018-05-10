@@ -6,6 +6,7 @@ import capacite.AttaqueCiblee;
 import carte.ICarte;
 import carte.Serviteur;
 import carte.Sort;
+import cible.ICible;
 import exception.HearthstoneException;
 import heros.Heros;
 import joueur.IJoueur;
@@ -14,18 +15,56 @@ import plateau.Plateau;
 
 public class Main {
 	
-	public static final int FINIR_TOUR = 1;
-	public static final int JOUER_CARTE = 2;
-	public static final int UTILISER_CARTE = 3;
-	public static final int UTILISER_POUVOIR_HEROS = 4;
-	
-	public static void afficherCarte(String prefixe, ICarte carte) {
-		String jouable = ".......";
-		if ( carte.getCout() <= Plateau.getInstance().getJoueurCourant().getStockMana() ) {
-			jouable = "JOUABLE";
+	public static ICible demanderCible() {
+		ICible cible = null;
+		IJoueur joueurAdverse = null;
+		try {
+			joueurAdverse = Plateau.getInstance().getAdversaire(Plateau.getInstance().getJoueurCourant());
+		} catch (HearthstoneException e) {
+			e.printStackTrace();
 		}
-		
-		System.out.println(jouable + " " + carte);	
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Qui vises-tu ?");
+		System.out.println(" - 1. Le héros adverse");
+		System.out.println(" - 2. Un serviteur adverse");
+		int choix = sc.nextInt();
+		switch ( choix ) {
+			case 1:
+				cible = joueurAdverse.getHeros();
+				break;
+			case 2:
+				System.out.println("Nom du serviteur : ");
+				String nomCarte = sc.nextLine();
+				ICarte carte = joueurAdverse.getCarteEnJeu(nomCarte);
+				if ( carte != null ) {
+					cible = (Serviteur) carte;
+				}
+				break;
+		}
+		return cible;
+	}
+	
+	public static void afficherCarteMain(ICarte carte) {	
+		System.out.print("## ");
+		if ( carte.getProprietaire() == Plateau.getInstance().getJoueurCourant() ) {
+			String jouable = ".......";
+			if ( carte.getCout() <= Plateau.getInstance().getJoueurCourant().getStockMana() ) {
+				jouable = "JOUABLE";
+			}
+			System.out.print(jouable + " (" + carte.getCout() + ") ");
+		}
+		System.out.println(carte);
+	}
+	
+	public static void afficherCarteJeu(ICarte carte) {
+		if ( carte.getProprietaire() == Plateau.getInstance().getJoueurCourant() ) {
+			String jouable = ".......";
+			if ( ((Serviteur)carte).peutAttaquer() ) {
+				jouable = "JOUABLE";
+			}
+			System.out.print(jouable + " (" + carte.getCout() + ") ");
+		}
+		System.out.println(carte);
 	}
 	
 	public static void afficherTerrain() {
@@ -39,12 +78,12 @@ public class Main {
 		
 		System.out.println("\n==================================");
 		for ( ICarte carte : joueurCourant.getJeu() )
-			afficherCarte("", carte);
+			afficherCarteJeu(carte);
 		System.out.println("==================================");
 		System.out.println("----------------------------------");
 		System.out.println("==================================");
 		for ( ICarte carte : joueurAdverse.getJeu() )
-			afficherCarte("", carte);
+			afficherCarteJeu(carte);
 		System.out.println("==================================");
 	}
 	
@@ -67,7 +106,7 @@ public class Main {
 			System.out.println("## VIDE");
 		} else {
 			for ( ICarte carte : joueurCourant.getMain() )
-				afficherCarte("## ", carte);
+				afficherCarteMain(carte);
 		}
 		
 		System.out.println("##########################");

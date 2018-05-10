@@ -19,9 +19,14 @@ public class AttaqueCiblee extends Capacite {
 	}
 	
 	@Override
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+		executerAction(cible);
+	}
+	
+	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
 		if ( cible == null )
-			throw new HearthstoneException("La cible ne peut pas être nulle");
+			throw new CibleInvalideException("La cible ne peut pas être nulle");
 		
 		if ( !(cible instanceof ICible) )
 			throw new CibleInvalideException("La cible doit être une cible valide ( = avoir des points de vie ).");

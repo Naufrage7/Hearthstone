@@ -20,21 +20,33 @@ public class EffetPermanent extends Capacite {
 	private void setServiteursAffectes(ArrayList<Serviteur> serviteursAffectes) {
 		this.serviteursAffectes = serviteursAffectes;
 	}
+	
+	public void executerEffetDebutTour(Object cible) throws HearthstoneException {
+		executerAction(null);
+	}
+	
+	public void executerEffetFinTour() throws HearthstoneException {
+		executerAction(null);
+	}
 
-	public void executerEffetDebutTour() throws HearthstoneException {
+	public void executerAction(Object cible) throws HearthstoneException {
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurCourant = plateau.getJoueurCourant();
 		
 		for ( ICarte c : joueurCourant.getJeu() ) {
 			if ( c instanceof Serviteur ) {
 				Serviteur s = (Serviteur) c;
-				if ( !this.serviteursAffectes.contains(s) ) {
+				if ( s.getCapacite() != this && !this.serviteursAffectes.contains(s) ) {
 					s.setAttaque(s.getAttaque() + 1);
 					s.setVie(s.getVie() + 1);
 					this.serviteursAffectes.add(s);
 				}
 			}
 		}
+	}
+	
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+		executerAction(null);
 	}
 	
 	public void executerEffetDisparition(Object cible) throws HearthstoneException {

@@ -2,6 +2,7 @@ package joueur;
 
 import java.util.ArrayList;
 
+import application.Main;
 import capacite.AttaqueCiblee;
 import capacite.AttaqueDuHeros;
 import capacite.AttaqueTotale;
@@ -16,6 +17,8 @@ import capacite.Provocation;
 import carte.ICarte;
 import carte.Serviteur;
 import carte.Sort;
+import cible.ICible;
+import exception.CibleInvalideException;
 import exception.HearthstoneException;
 import heros.Heros;
 
@@ -222,17 +225,35 @@ public class Joueur implements IJoueur {
 		try {
 			this.piocher();
 		} catch ( HearthstoneException e ) {
-			
+			System.out.println(e.getMessage());
+		}
+		
+		for ( ICarte carte : this.jeu ) {
+			try {
+				carte.executerEffetDebutTour(null);
+			} catch ( CibleInvalideException e ) {
+				ICible cible = Main.demanderCible();
+				carte.executerEffetDebutTour(cible);
+			} catch ( HearthstoneException e ) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@Override
 	public void finirTour() throws HearthstoneException {
-		for ( ICarte c : this.jeu ) {
-			if ( c instanceof Serviteur ) {
-				Serviteur s = (Serviteur) c;
-				if ( !s.peutAttaquer() )
-					s.setPeutAttaquer(true);
+		for ( ICarte carte : this.jeu ) {
+			Serviteur serviteur = (Serviteur) carte;
+			if ( !serviteur.peutAttaquer() )
+				serviteur.setPeutAttaquer(true);
+			
+			try {
+				carte.executerEffetFinTour(null);
+			} catch ( CibleInvalideException e ) {
+				ICible cible = Main.demanderCible();
+				carte.executerEffetFinTour(cible);
+			} catch ( HearthstoneException e ) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -248,18 +269,18 @@ public class Joueur implements IJoueur {
 
 	@Override
 	public void jouerCarte(ICarte carte) throws HearthstoneException {
-		if ( carte.getCout() > this.stockMana )
-			throw new HearthstoneException("Impossible de jouer une carte coutant plus de mana que le joueur n'en possède");
-		
-		this.main.remove(carte);
-		this.jeu.add(carte);
-		carte.executerEffetDebutMiseEnJeu(carte);
+		jouerCarte(carte, null);
 	}
 
 	@Override
 	public void jouerCarte(ICarte carte, Object cible) throws HearthstoneException {
 		if ( carte.getCout() > this.stockMana )
 			throw new HearthstoneException("Impossible de jouer une carte coutant plus de mana que le joueur n'en possède");
+		
+		carte.executerEffetDebutMiseEnJeu(cible);
+		this.stockMana -= carte.getCout();
+		this.main.remove(carte);
+		this.jeu.add(carte);
 	}
 
 	@Override
@@ -268,6 +289,7 @@ public class Joueur implements IJoueur {
 
 	@Override
 	public void utiliserPouvoir(Object cible) throws HearthstoneException {
+		this.getHeros().getPouvoir().executerAction(cible);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package application;
 import java.util.Scanner;
 
 import carte.ICarte;
+import cible.ICible;
 import exception.CibleInvalideException;
 import exception.HearthstoneException;
 import joueur.IJoueur;
@@ -42,27 +43,11 @@ public class InteractionJouerCarte extends Interaction {
 		try {
 			joueurCourant.jouerCarte(carte);
 		} catch ( CibleInvalideException e ) {
-			System.out.println("Qui vises-tu ?");
-			System.out.println(" - 1. Le héros adverse");
-			System.out.println(" - 2. Un serviteur adverse");
-			choix = sc.nextInt();
-			switch ( choix ) {
-				case 1:
-					try {
-						joueurCourant.jouerCarte(carte, joueurAdverse.getHeros());
-					} catch ( HearthstoneException e2 ) {
-						System.out.println(e2.getMessage());
-					}
-					break;
-				case 2:
-					System.out.println("Nom du serviteur : ");
-					nomCarte = sc.nextLine();
-					try {
-						joueurCourant.jouerCarte(carte, joueurAdverse.getCarteEnJeu(nomCarte));
-					} catch ( HearthstoneException e2 ) {
-						System.out.println(e2.getMessage());
-					}
-					break;
+			ICible cible = Main.demanderCible();
+			try {
+				joueurCourant.jouerCarte(carte, cible);
+			} catch (HearthstoneException e2) {
+				e2.printStackTrace();
 			}
 		} catch ( HearthstoneException e ) {
 			e.printStackTrace();

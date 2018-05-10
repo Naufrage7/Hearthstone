@@ -133,6 +133,8 @@ public class Carte implements ICarte {
 
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
+		if ( this.capacite != null )
+			this.capacite.executerAction(cible);
 	}
 
 	@Override
@@ -141,7 +143,7 @@ public class Carte implements ICarte {
 	}
 	
 	public String toString() {
-		return "(" + getCout() + ") ";
+		return "";
 	}
 
 }

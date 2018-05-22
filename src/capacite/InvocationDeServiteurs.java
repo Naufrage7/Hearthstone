@@ -6,21 +6,11 @@ import joueur.IJoueur;
 import plateau.IPlateau;
 import plateau.Plateau;
 
-public class InvocationDeServiteurs extends Capacite {
-	private Serviteur serviteur;
+public class InvocationDeServiteurs extends ImageMiroir {
 	
 	public InvocationDeServiteurs(String nom, String description, Serviteur serviteur) {
 		super(nom, description);
-		this.setServiteur(serviteur);
+		ajouterServiteur(serviteur);
 	}
 	
-	private void setServiteur(Serviteur serviteur) {
-		this.serviteur = serviteur;
-	}
-	
-	public void executerAction(Object cible) throws HearthstoneException {
-		IPlateau plateau = Plateau.getInstance();
-		IJoueur joueurCourant = plateau.getJoueurCourant();	
-		joueurCourant.getJeu().add(this.serviteur);
-	}
 }

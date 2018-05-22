@@ -7,27 +7,24 @@ import joueur.IJoueur;
 import plateau.IPlateau;
 import plateau.Plateau;
 
-public class AttaqueTotale extends Capacite {
-	private int degats;
+public class AttaqueTotale extends AttaqueCiblee {
 	
 	public AttaqueTotale(String nom, int degats) {
-		super("Attaque totale", "Infligde " + degats + " de dégats à tous les serviteurs adverses");
-		this.setDegats(degats);
+		super("Infligde " + degats + " de dégats à tous les serviteurs adverses", degats);
 	}
 	
-	private void setDegats(int degats) {
-		this.degats = degats;
-	}
-	
+	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurCourant = plateau.getJoueurCourant();
 		IJoueur joueurAdverse = plateau.getAdversaire(joueurCourant);
-		for ( ICarte c : joueurAdverse.getJeu() ) {
-			if ( c instanceof Serviteur ) {
-				Serviteur s = (Serviteur) c;
-				s.setVie(s.getVie() - this.degats);
+		
+		for ( ICarte carte : joueurAdverse.getJeu() ) {
+			if ( carte instanceof Serviteur ) {
+				Serviteur serviteur = (Serviteur) carte;
+				serviteur.setVie(serviteur.getVie() - getDegats());
 			}
 		}
 	}
+
 }

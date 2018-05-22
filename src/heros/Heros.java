@@ -1,11 +1,9 @@
 package heros;
 
-import exception.HearthstoneException;
-import exception.MortException;
 import capacite.Capacite;
-import cible.ICible;
+import carte.Cible;
 
-public class Heros implements ICible {
+public class Heros implements Cible {
 
 	private String nom;
 	private int vie;
@@ -54,6 +52,7 @@ public class Heros implements ICible {
 	private void setPouvoir(Capacite pouvoir) {
 		if ( pouvoir == null )
 			throw new IllegalArgumentException("Le pouvoir ne peut pas être nul !");
+		
 		this.pouvoir = pouvoir;
 	}
 
@@ -83,18 +82,9 @@ public class Heros implements ICible {
 		return this.pouvoir;
 	}
 
-	/**
-	 * Occasionne des dégats au héros
-	 * 
-	 * @param degats le nombre de dégats à occasionner
-	 * @throws MortException
-	 */
-	public void recevoirDegats(int degats) throws HearthstoneException {
+	@Override
+	public void recevoirDegats(int degats) {
 		this.setVie(this.getVie() - degats);
-	}
-	
-	public String toString() {
-		return "Heros [nom="+this.nom+", vie="+this.vie+", pouvoir="+this.pouvoir+"]";
 	}
 
 }

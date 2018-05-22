@@ -1,14 +1,25 @@
 package capacite;
 
-public class AttaqueDuHeros extends Capacite {
-	private int degats;
-	
+import carte.Cible;
+import exception.CibleInvalideException;
+import exception.HearthstoneException;
+import heros.Heros;
+
+public class AttaqueDuHeros extends AttaqueCiblee {
+
 	public AttaqueDuHeros(String nom, int degats) {
-		super(nom, "Inflige " + degats + " de dégats au héros adverse");
-		this.setDegats(degats);
+		super("Inflige " + degats + " de dégats au héros adverse", degats);
 	}
 	
-	private void setDegats(int degats) {
-		this.degats = degats;
+	@Override
+	public void executerAction(Object cible) throws HearthstoneException {
+		if ( cible == null )
+			throw new CibleInvalideException("La cible ne peut pas être nulle.");
+		
+		if ( !(cible instanceof Heros) )
+			throw new CibleInvalideException("La cible doit être un héros.");
+		
+		((Cible)cible).recevoirDegats(getDegats());
 	}
+	
 }

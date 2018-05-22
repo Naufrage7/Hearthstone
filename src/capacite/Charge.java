@@ -1,10 +1,8 @@
 package capacite;
 
-import carte.ICarte;
 import carte.Serviteur;
 import exception.CibleInvalideException;
 import exception.HearthstoneException;
-import plateau.Plateau;
 
 public class Charge extends Capacite {
 
@@ -13,20 +11,15 @@ public class Charge extends Capacite {
 	}
 	
 	@Override
-	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
-		for ( ICarte carte : Plateau.getInstance().getJoueurCourant().getMain() ) {
-			if ( carte instanceof Serviteur ) {
-				Serviteur serviteur = (Serviteur) carte;
-				if ( serviteur.getCapacite() == this )
-					executerAction(serviteur);
-				return;
-			}
-		}
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {		
 		executerAction(cible);
 	}
 	
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
+		if ( cible == null )
+			throw new CibleInvalideException("La cible ne peut pas être nulle !");
+			
 		if ( !(cible instanceof Serviteur) ) 
 			throw new CibleInvalideException("La cible ne peut être qu'un serviteur !");
 		
@@ -34,7 +27,4 @@ public class Charge extends Capacite {
 		s.setPeutAttaquer(true);
 	}
 
-	public String toString() {
-		return super.toString() + " -> Charge []";
-	}
 }

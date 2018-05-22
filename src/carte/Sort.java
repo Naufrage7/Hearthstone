@@ -18,7 +18,12 @@ public class Sort extends Carte {
 	}
 	
 	public String toString() {
-		return super.toString() + this.getNom() + " ( " + this.getCapacite().getDescription() + " )";
+		return this.getNom() + " ( " + this.getCapacite().getDescription() + " )";
+	}
+
+	@Override
+	public boolean disparait() {
+		return true;
 	}
 	
 }

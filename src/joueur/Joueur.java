@@ -17,7 +17,6 @@ import capacite.Provocation;
 import carte.ICarte;
 import carte.Serviteur;
 import carte.Sort;
-import cible.ICible;
 import exception.CibleInvalideException;
 import exception.HearthstoneException;
 import heros.Heros;
@@ -138,24 +137,27 @@ public class Joueur implements IJoueur {
 		this.deck.add(new Sort("Attaque mentale", 2, new AttaqueDuHeros("Attaque mentale", 5), this));
 		this.deck.add(new Serviteur(6, 6, "Champion de Hurlevent", 7, new EffetPermanent("Bonus de hurlevent", 1, 1),this));
 		this.deck.add(new Serviteur(2, 2, "Chef de raid", 3, new EffetPermanent("Bonus du chef de raid", 1, 0), this));
-		this.deck.add(new Serviteur(5, 4, "Garde de Baie-du-butin", 5, new Provocation(), this));
+		this.deck.add(new Serviteur(5, 4, "Garde de Baie-du-butin", 5, new Provocation("Provocation", "Force le joueur adverse à viser cette cible"), this));
 		this.deck.add(new Serviteur(5, 2, "La missilière téméraire", 6, new Charge(), this));
-		this.deck.add(new Serviteur(4, 4, "L'orgre-magi", 4, new Provocation(), this));
-		this.deck.add(new Serviteur(4, 7, "Archimage", 6, new Provocation(), this));
+		this.deck.add(new Serviteur(4, 4, "L'orgre-magi", 4, new Provocation("Provocation", "Force le joueur adverse à viser cette cible"), this));
+		this.deck.add(new Serviteur(4, 7, "Archimage", 6, new Provocation("Provocation", "Force le joueur adverse à viser cette cible"), this));
 		this.deck.add(new Serviteur(1, 1, "Gnôme lépreux", 1, new AttaqueCiblee("Attaque du lépreux", 2), this));
 		this.deck.add(new Serviteur(2, 3, "Golem des moissons", 3, new InvocationDeServiteurs("Golémisation", "Invoque un \"Golem endomagé\" +2/+1 qui n'a aucune capacité", new Serviteur(2, 1, "Golem endomagé", 0, this)), this));
 	
 		if ( this.heros.getNom().equals("Jaina") ) {
 			this.deck.add(new Sort("Choc de flamme", 7, new AttaqueTotale("Attaque massive", 4), this));
 			this.deck.add(new Sort("Eclair de givre", 2, new AttaqueCiblee("Attaque du givre", 3), this));
-			this.deck.add(new Sort("Intelligence des arcanes", 2, new Pioche(2), this));
-			this.deck.add(new Sort("Image miroir", 7, new ImageMiroir("Image miroir", new Serviteur(0, 2, "Serviteur de Jaina", 0, this)), this));
+			this.deck.add(new Sort("Intelligence des arcanes", 2, new Pioche("Pioche", "Pioche 2 cartes", 2), this));
+			
+			ImageMiroir imageMiroir = new ImageMiroir("Image miroir", "");
+			imageMiroir.ajouterServiteur(new Serviteur(0, 2, "Serviteur de Jaina", 0, this));
+			this.deck.add(new Sort("Image miroir", 7, imageMiroir, this));
 			this.deck.add(new Sort("Explosion pyrotechnique", 10, new AttaqueCiblee("Explosion pyrotechnique", 10), this));
 		} else if ( this.heros.getNom().equals("Rexxar") ) {
-			this.deck.add(new Serviteur(3, 2, "Busard affamé", 5, new Pioche(1), this));
-			this.deck.add(new Sort("Marque du chasseur", 1, new MarqueDuChasseur("Marque du chasseur"), this));
+			this.deck.add(new Serviteur(3, 2, "Busard affamé", 5, new Pioche("Pioche", "Pioche 1 carte", 1), this));
+			this.deck.add(new Sort("Marque du chasseur", 1, new MarqueDuChasseur("Marque du chasseur", "Réduit à 1 le nombre de points de vie"), this));
 			this.deck.add(new Sort("Tir des arcanes", 1, new AttaqueCiblee("Tir des arcanes", 2), this));
-			this.deck.add(new Sort("Lâchez les chiens", 3, new InvocationDesChiens(), this));
+			this.deck.add(new Sort("Lâchez les chiens", 3,  new InvocationDesChiens("", "", this), this));
 			this.deck.add(new Sort("Ordre de tuer", 3, new AttaqueCiblee("Ordre de tuer", 3), this));
 		}
 	}
@@ -232,7 +234,7 @@ public class Joueur implements IJoueur {
 			try {
 				carte.executerEffetDebutTour(null);
 			} catch ( CibleInvalideException e ) {
-				ICible cible = Main.demanderCible();
+				Object cible = Main.demanderCible();
 				carte.executerEffetDebutTour(cible);
 			} catch ( HearthstoneException e ) {
 				e.printStackTrace();
@@ -242,18 +244,25 @@ public class Joueur implements IJoueur {
 
 	@Override
 	public void finirTour() throws HearthstoneException {
-		for ( ICarte carte : this.jeu ) {
-			Serviteur serviteur = (Serviteur) carte;
-			if ( !serviteur.peutAttaquer() )
-				serviteur.setPeutAttaquer(true);
-			
+		for ( ICarte carte : this.jeu ) {			
 			try {
 				carte.executerEffetFinTour(null);
 			} catch ( CibleInvalideException e ) {
-				ICible cible = Main.demanderCible();
+				Object cible = Main.demanderCible();
 				carte.executerEffetFinTour(cible);
 			} catch ( HearthstoneException e ) {
 				e.printStackTrace();
+			}
+			
+			if ( carte.disparait() ) {
+				perdreCarte(carte);
+				return;
+			}
+			
+			if ( carte instanceof Serviteur ) {
+				Serviteur serviteur = (Serviteur) carte;
+				if ( !serviteur.peutAttaquer() )
+					serviteur.setPeutAttaquer(true);
 			}
 		}
 	}
@@ -281,10 +290,16 @@ public class Joueur implements IJoueur {
 		this.stockMana -= carte.getCout();
 		this.main.remove(carte);
 		this.jeu.add(carte);
+		
+		if ( carte instanceof Sort )
+			this.perdreCarte(carte);
 	}
 
 	@Override
 	public void utiliserCarte(ICarte carte, Object cible) throws HearthstoneException {
+		if ( carte instanceof Serviteur ) {
+			((Serviteur)carte).attaquer(cible);
+		}
 	}
 
 	@Override
@@ -294,10 +309,8 @@ public class Joueur implements IJoueur {
 
 	@Override
 	public void perdreCarte(ICarte carte) throws HearthstoneException {
-	}
-	
-	public String toString() {
-		return "Joueur [pseudo="+this.pseudo+", mana="+this.mana+", stockMana="+this.stockMana+", heros="+this.heros+", main="+this.main+", jeu="+this.jeu+"]";
+		carte.executerEffetDisparition(null);
+		jeu.remove(carte);
 	}
 
 }

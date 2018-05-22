@@ -1,4 +1,4 @@
-package application;
+package interactions;
 
 import exception.HearthstoneException;
 import joueur.IJoueur;
@@ -6,16 +6,17 @@ import plateau.Plateau;
 
 public class InteractionFinirTour extends Interaction {
 
+	public InteractionFinirTour(int choix) {
+		super(choix);
+	}
+
 	@Override
 	public String getMessage() {
 		return super.getMessage() + "Finir le tour";
 	}
 	
 	@Override
-	protected boolean traitementSpecialise(int choix) {
-		if ( choix != getChoix() )
-			return false;
-		
+	protected void traitementSpecialise() {		
 		try {
 			Plateau plateau = Plateau.getInstance();
 			IJoueur joueurCourant = plateau.getJoueurCourant();
@@ -25,13 +26,6 @@ public class InteractionFinirTour extends Interaction {
 		} catch ( HearthstoneException e ) {
 			e.printStackTrace();
 		}
-		
-		return true;
 	}
 	
-	@Override
-	public int getChoix() {
-		return 1;
-	}
-
 }

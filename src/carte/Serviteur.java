@@ -1,14 +1,15 @@
 package carte;
 
+import capacite.AttaqueCiblee;
 import capacite.Capacite;
-import cible.ICible;
+import exception.HearthstoneException;
 import joueur.IJoueur;
 
-public class Serviteur extends Carte implements ICible {
+public class Serviteur extends Carte implements Cible {
 
-	private int attaque;
 	private int vie;
 	private boolean peutAttaquer;
+	private Capacite attaque;
 
 	/**
 	 * Constructeur de la classe Serviteur
@@ -70,7 +71,7 @@ public class Serviteur extends Carte implements ICible {
 	 */
 	public void setAttaque(int attaque) {
 		if (attaque >= 0) {
-			this.attaque = attaque;
+			this.attaque = new AttaqueCiblee("", attaque);
 		} else {
 			throw new IllegalArgumentException("L'attaque du serviteur ne peut pas être une valeur négative !");
 		}
@@ -103,7 +104,7 @@ public class Serviteur extends Carte implements ICible {
 	 * @return attaque l'attaque du serviteur
 	 */
 	public int getAttaque() {
-		return this.attaque;
+		return ((AttaqueCiblee)this.attaque).getDegats();
 	}
 
 	/**
@@ -128,6 +129,11 @@ public class Serviteur extends Carte implements ICible {
 		return this.vie <= 0;
 	}
 	
+	public void attaquer(Object cible) throws HearthstoneException {
+		this.attaque.executerAction(cible);
+	}
+	
+	@Override
 	public void recevoirDegats(int degats) {
 		this.setVie(this.getVie() - degats);
 	}
@@ -145,6 +151,6 @@ public class Serviteur extends Carte implements ICible {
 			toString += " ( " + this.getCapacite().getNom() + " : " + this.getCapacite().getDescription() + " )";
 		else
 			toString += " ( Sans capacité )";
-		return super.toString() + toString;
+		return toString;
 	}
 }

@@ -1,12 +1,11 @@
 package capacite;
 
-import carte.Serviteur;
-import cible.ICible;
+import carte.Cible;
 import exception.CibleInvalideException;
 import exception.HearthstoneException;
-import heros.Heros;
 
 public class AttaqueCiblee extends Capacite {
+	
 	private int degats;
 	
 	public AttaqueCiblee(String nom, int degats) {
@@ -18,6 +17,10 @@ public class AttaqueCiblee extends Capacite {
 		this.degats = degats;
 	}
 	
+	public int getDegats() {
+		return this.degats;
+	}
+	
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
 		executerAction(cible);
@@ -26,12 +29,12 @@ public class AttaqueCiblee extends Capacite {
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
 		if ( cible == null )
-			throw new CibleInvalideException("La cible ne peut pas être nulle");
+			throw new CibleInvalideException("La cible ne peut pas être nulle.");
 		
-		if ( !(cible instanceof ICible) )
-			throw new CibleInvalideException("La cible doit être une cible valide ( = avoir des points de vie ).");
+		if ( !(cible instanceof Cible) )
+			throw new CibleInvalideException("La cible doit être une cible valide.");
 		
-		ICible cibleVisee = (ICible) cible;
-		cibleVisee.recevoirDegats(this.degats);
+		((Cible)cible).recevoirDegats(this.degats);
 	}
+
 }

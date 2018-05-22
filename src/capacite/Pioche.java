@@ -6,10 +6,11 @@ import plateau.IPlateau;
 import plateau.Plateau;
 
 public class Pioche extends Capacite {
+	
 	private int quantite;
 	
-	public Pioche(int quantite) {
-		super("Pioche", "Permet de piocher " + quantite + " carte(s)");
+	public Pioche(String nom, String description, int quantite) {
+		super(nom, description);
 		this.setQuantite(quantite);
 	}
 	
@@ -17,6 +18,7 @@ public class Pioche extends Capacite {
 		this.quantite = quantite;
 	}
 	
+	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurCourant = plateau.getJoueurCourant();
@@ -24,4 +26,5 @@ public class Pioche extends Capacite {
 		for ( int i = 0; i < this.quantite; i++ )
 			joueurCourant.piocher();
 	}
+	
 }

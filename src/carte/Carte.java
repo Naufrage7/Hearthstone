@@ -4,7 +4,7 @@ import capacite.Capacite;
 import exception.HearthstoneException;
 import joueur.IJoueur;
 
-public class Carte implements ICarte {
+public abstract class Carte implements ICarte {
 	
 	private String nom;
 	private int cout;
@@ -49,6 +49,7 @@ public class Carte implements ICarte {
 	private void setNom(String nom) {
 		if ( nom == null )
 			throw new IllegalArgumentException("Le nom de la carte ne peut pas être nul !");
+		
 		this.nom = nom;
 	}
 	
@@ -60,6 +61,7 @@ public class Carte implements ICarte {
 	private void setCout(int cout) {
 		if ( cout < 0 )
 			throw new IllegalArgumentException("Le cout de la carte ne peut pas être une valeur négative !");
+		
 		this.cout = cout;
 	}
 	
@@ -71,6 +73,7 @@ public class Carte implements ICarte {
 	private void setProprietaire(IJoueur proprietaire) {
 		if ( proprietaire == null )
 			throw new IllegalArgumentException("Le propriétaire ne peut pas être nul !");
+		
 		this.proprietaire = proprietaire;
 	}
 	
@@ -138,12 +141,9 @@ public class Carte implements ICarte {
 	}
 
 	@Override
-	public boolean disparait() {
-		return false;
-	}
+	public abstract boolean disparait();
 	
-	public String toString() {
-		return "";
-	}
+	@Override
+	public abstract String toString();
 
 }

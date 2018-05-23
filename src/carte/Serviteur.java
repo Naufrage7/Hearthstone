@@ -1,15 +1,19 @@
 package carte;
 
-import capacite.AttaqueCiblee;
 import capacite.Capacite;
+import capacite.IBonifiable;
+import capacite.Provocation;
+import exception.CibleInvalideException;
 import exception.HearthstoneException;
 import joueur.IJoueur;
+import plateau.IPlateau;
+import plateau.Plateau;
 
-public class Serviteur extends Carte implements Cible {
+public class Serviteur extends Carte implements ICible, IBonifiable {
 
 	private int vie;
+	private int attaque;
 	private boolean peutAttaquer;
-	private Capacite attaque;
 
 	/**
 	 * Constructeur de la classe Serviteur
@@ -71,7 +75,7 @@ public class Serviteur extends Carte implements Cible {
 	 */
 	public void setAttaque(int attaque) {
 		if (attaque >= 0) {
-			this.attaque = new AttaqueCiblee("", attaque);
+			this.attaque = attaque;
 		} else {
 			throw new IllegalArgumentException("L'attaque du serviteur ne peut pas être une valeur négative !");
 		}
@@ -104,7 +108,7 @@ public class Serviteur extends Carte implements Cible {
 	 * @return attaque l'attaque du serviteur
 	 */
 	public int getAttaque() {
-		return ((AttaqueCiblee)this.attaque).getDegats();
+		return attaque;
 	}
 
 	/**
@@ -130,7 +134,16 @@ public class Serviteur extends Carte implements Cible {
 	}
 	
 	public void attaquer(Object cible) throws HearthstoneException {
-		this.attaque.executerAction(cible);
+		if ( !(cible instanceof ICible) )
+			throw new CibleInvalideException("La cible ne peut pas être nulle !");
+		
+		ICible cibleVisee = (ICible) cible;
+		if ( cibleVisee.peutRecevoirDegats() ) {
+			cibleVisee.recevoirDegats(attaque);
+			setVie(getVie() - cibleVisee.getVie());
+		} else {
+			throw new CibleInvalideException("La cible ne peut pas recevoir de dégats !");
+		}
 	}
 	
 	@Override
@@ -138,6 +151,47 @@ public class Serviteur extends Carte implements Cible {
 		this.setVie(this.getVie() - degats);
 	}
 
+	@Override
+	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
+		super.executerEffetDebutMiseEnJeu(cible);
+		
+		IPlateau plateau = Plateau.getInstance();
+		IJoueur joueurCourant = plateau.getJoueurCourant();
+		
+		for ( ICarte carte : joueurCourant.getJeu() )
+			carte.executerAction(this);
+	}
+
+	@Override
+	public void ajouterBonus(int bonusVie, int bonusAttaque) {
+		setVie(getVie() + bonusVie);
+		setAttaque(getAttaque() + bonusAttaque);
+	}
+	
+	@Override
+	public void retirerBonus(int bonusVie, int bonusAttaque) {
+		setVie(getVie() - bonusVie);
+		setAttaque(getAttaque() - bonusAttaque);
+	}
+
+	@Override
+	public boolean peutRecevoirDegats() {
+		if ( super.getCapacite() instanceof Provocation )
+			return true;
+		
+		IJoueur joueurProprietaire = super.getProprietaire();
+		
+		boolean provocationSurLeTerrain = false;
+		for ( ICarte carte : joueurProprietaire.getJeu() ) {
+			if ( carte.getCapacite() instanceof Provocation ) {
+				provocationSurLeTerrain = true;
+				break;
+			}
+		}
+		
+		return !provocationSurLeTerrain;
+	}
+	
 	/**
 	 * Retourne le toString de Serviteur
 	 * 
@@ -153,4 +207,5 @@ public class Serviteur extends Carte implements Cible {
 			toString += " ( Sans capacité )";
 		return toString;
 	}
+	
 }

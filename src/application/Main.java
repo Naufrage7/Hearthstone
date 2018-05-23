@@ -46,12 +46,12 @@ public class Main {
 				cible = joueurAdverse.getHeros();
 				break;
 			case 2:
-				System.out.println("Nom du serviteur : ");
+				System.out.print("Nom du serviteur : ");
 				nomCarte = sc.nextLine();
 				cible = joueurAdverse.getCarteEnJeu(nomCarte);
 				break;
 			case 3:
-				System.out.println("Nom du serviteur : ");
+				System.out.print("Nom du serviteur : ");
 				nomCarte = sc.nextLine();
 				cible = joueurCourant.getCarteEnJeu(nomCarte);
 				break;

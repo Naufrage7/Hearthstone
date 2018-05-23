@@ -1,6 +1,6 @@
 package capacite;
 
-import carte.Cible;
+import carte.ICible;
 import exception.CibleInvalideException;
 import exception.HearthstoneException;
 import heros.Heros;
@@ -19,7 +19,7 @@ public class AttaqueDuHeros extends AttaqueCiblee {
 		if ( !(cible instanceof Heros) )
 			throw new CibleInvalideException("La cible doit être un héros.");
 		
-		((Cible)cible).recevoirDegats(getDegats());
+		((ICible)cible).recevoirDegats(getDegats());
 	}
 	
 }

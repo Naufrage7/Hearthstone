@@ -1,9 +1,9 @@
 package heros;
 
 import capacite.Capacite;
-import carte.Cible;
+import carte.ICible;
 
-public class Heros implements Cible {
+public class Heros implements ICible {
 
 	private String nom;
 	private int vie;

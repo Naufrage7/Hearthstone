@@ -239,7 +239,13 @@ public class Joueur implements IJoueur {
 			} catch ( HearthstoneException e ) {
 				e.printStackTrace();
 			}
-		}
+			
+			if ( carte instanceof Serviteur ) {
+				Serviteur serviteur = (Serviteur) carte;
+				if ( !serviteur.peutAttaquer() )
+					serviteur.setPeutAttaquer(true);
+			}
+		}		
 	}
 
 	@Override
@@ -257,12 +263,6 @@ public class Joueur implements IJoueur {
 			if ( carte.disparait() ) {
 				perdreCarte(carte);
 				return;
-			}
-			
-			if ( carte instanceof Serviteur ) {
-				Serviteur serviteur = (Serviteur) carte;
-				if ( !serviteur.peutAttaquer() )
-					serviteur.setPeutAttaquer(true);
 			}
 		}
 	}

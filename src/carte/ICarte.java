@@ -1,5 +1,6 @@
 package carte;
 
+import capacite.ICapacite;
 import exception.HearthstoneException;
 import joueur.IJoueur;
 
@@ -14,6 +15,8 @@ public interface ICarte extends Cloneable {
 	String getNom(); // Une carte doit avoir un nom
 
 	int getCout(); // Une carte coûte un certain nombre de mana
+	
+	ICapacite getCapacite();
 
 	IJoueur getProprietaire(); // Une carte appartient à un joueur
 

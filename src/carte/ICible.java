@@ -2,7 +2,7 @@ package carte;
 
 import exception.MortException;
 
-public interface Cible {
+public interface ICible {
 	
 	/**
 	 * Occasionne des dégats au héros
@@ -11,5 +11,9 @@ public interface Cible {
 	 * @throws MortException
 	 */
 	public void recevoirDegats(int degats);
+	
+	public boolean peutRecevoirDegats();
+	
+	public int getVie();
 	
 }

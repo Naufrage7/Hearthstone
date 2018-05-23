@@ -37,13 +37,17 @@ public class InteractionJouerCarte extends Interaction {
 			joueurCourant.jouerCarte(carte);
 		} catch ( CibleInvalideException e ) {
 			Object cible = Main.demanderCible();
-			try {
-				joueurCourant.jouerCarte(carte, cible);
-			} catch (HearthstoneException e2) {
-				e2.printStackTrace();
+			if ( cible == null ) {
+				System.out.println("La cible n'existe pas ...");
+			} else {
+				try {
+					joueurCourant.jouerCarte(carte, cible);
+				} catch (HearthstoneException e2) {
+					System.out.println(e2.getMessage());
+				}
 			}
 		} catch ( HearthstoneException e ) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 

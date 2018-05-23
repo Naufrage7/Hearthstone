@@ -1,6 +1,7 @@
 package carte;
 
 import capacite.Capacite;
+import exception.HearthstoneException;
 import joueur.IJoueur;
 
 public class Sort extends Carte {
@@ -19,6 +20,13 @@ public class Sort extends Carte {
 	
 	public String toString() {
 		return this.getNom() + " ( " + this.getCapacite().getDescription() + " )";
+	}
+	
+	@Override
+	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
+		super.executerEffetDebutMiseEnJeu(cible);
+		IJoueur joueurProprietaire = getProprietaire();
+		joueurProprietaire.perdreCarte(this);
 	}
 
 	@Override

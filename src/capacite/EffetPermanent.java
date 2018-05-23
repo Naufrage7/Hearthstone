@@ -2,6 +2,7 @@ package capacite;
 
 import java.util.ArrayList;
 
+import carte.Carte;
 import carte.ICarte;
 import carte.Serviteur;
 import exception.HearthstoneException;
@@ -13,18 +14,13 @@ public class EffetPermanent extends Capacite {
 	
 	private int bonusAttaque;
 	private int bonusVie;
-	private ArrayList<Serviteur> serviteursAffectes;
+	private ArrayList<IBonifiable> bonifiablesAffectes = new ArrayList<IBonifiable>();
 	
 	
-	public EffetPermanent(String nom, int bonusAttaque, int bonusVie) {
-		super(nom, "Effet permanent sur les autres serviteurs alliés donnant un bonus " + bonusAttaque + "/" + bonusVie);
+	public EffetPermanent(String nom, String description, int bonusAttaque, int bonusVie) {
+		super(nom, description);
 		this.setBonusAttaque(bonusAttaque);
 		this.setBonusVie(bonusVie);
-		this.setServiteursAffectes(new ArrayList<Serviteur>());
-	}
-	
-	private void setServiteursAffectes(ArrayList<Serviteur> serviteursAffectes) {
-		this.serviteursAffectes = serviteursAffectes;
 	}
 	
 	private void setBonusAttaque(int bonusAttaque) {
@@ -44,34 +40,17 @@ public class EffetPermanent extends Capacite {
 	}
 	
 	@Override
-	public void executerEffetDebutTour() throws HearthstoneException {
-		executerAction(null);
-	}
-	
-	@Override
-	public void executerEffetFinTour() throws HearthstoneException {
-		executerAction(null);
-	}
-	
-	@Override
-	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
-		executerAction(null);
-	}
-	
-	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurCourant = plateau.getJoueurCourant();
 		
-		for ( ICarte c : joueurCourant.getJeu() ) {
-			if ( c instanceof Serviteur ) {
-				Serviteur s = (Serviteur) c;
-				if ( s.getCapacite() != this && !this.serviteursAffectes.contains(s) ) {
-					s.setAttaque(s.getAttaque() + getBonusAttaque());
-					s.setVie(s.getVie() + getBonusVie());
-					this.serviteursAffectes.add(s);
-				}
-			}
+		for ( ICarte carte : joueurCourant.getJeu() ) {
+			if ( !(carte instanceof IBonifiable) || carte.getCapacite() == this )
+				continue;
+			
+			IBonifiable bonifiable = (IBonifiable) carte;
+			if ( this.bonifiablesAffectes.contains(bonifiable) )
+					bonifiable.retirerBonus(bonusVie, bonusAttaque);
 		}
 	}
 	
@@ -80,14 +59,13 @@ public class EffetPermanent extends Capacite {
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurCourant = plateau.getJoueurCourant();
 		
-		for ( ICarte c : joueurCourant.getJeu() ) {
-			if ( c instanceof Serviteur ) {
-				Serviteur s = (Serviteur) c;
-				if ( this.serviteursAffectes.contains(s) ) {
-					s.setAttaque(s.getAttaque() - 1);
-					s.setVie(s.getVie() - 1);
-				}
-			}
+		for ( ICarte carte : joueurCourant.getJeu() ) {
+			if ( !(carte instanceof IBonifiable) )
+				continue;
+			
+			IBonifiable bonifiable = (IBonifiable) carte;
+			if ( this.bonifiablesAffectes.contains(bonifiable) )
+					bonifiable.retirerBonus(bonusVie, bonusAttaque);
 		}
 	}
 }

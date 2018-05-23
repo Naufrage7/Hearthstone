@@ -1,30 +1,24 @@
 package capacite;
 
-import carte.Serviteur;
 import exception.CibleInvalideException;
 import exception.HearthstoneException;
 
 public class Charge extends Capacite {
 
-	public Charge() {
-		super("Charge", "Cette capacité permet à un serviteur de ne pas attendre avant d'attaquer");
+	public Charge(String nom, String description) {
+		super(nom, description);
 	}
 	
 	@Override
-	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {		
-		executerAction(cible);
-	}
-	
-	@Override
-	public void executerAction(Object cible) throws HearthstoneException {
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
 		if ( cible == null )
 			throw new CibleInvalideException("La cible ne peut pas être nulle !");
 			
-		if ( !(cible instanceof Serviteur) ) 
-			throw new CibleInvalideException("La cible ne peut être qu'un serviteur !");
+		if ( !(cible instanceof ITemporisable) ) 
+			throw new CibleInvalideException("La cible doit être un serviteur !");
 		
-		Serviteur s = (Serviteur) cible;
-		s.setPeutAttaquer(true);
+		ITemporisable temporisable = (ITemporisable) cible;
+		temporisable.setPeutJouer(true);
 	}
 
 }

@@ -1,7 +1,12 @@
 package heros;
 
 import capacite.Capacite;
+import capacite.Provocation;
+import carte.ICarte;
 import carte.ICible;
+import exception.HearthstoneException;
+import joueur.IJoueur;
+import plateau.Plateau;
 
 public class Heros implements ICible {
 
@@ -12,8 +17,10 @@ public class Heros implements ICible {
 	/**
 	 * Construit un héros à partir de son nom et de sa vie
 	 * 
-	 * @param nom le nom du héros
-	 * @param vie la vie du héros
+	 * @param nom
+	 *            le nom du héros
+	 * @param vie
+	 *            la vie du héros
 	 */
 	public Heros(String nom, int vie, Capacite pouvoir) {
 		this.setNom(nom);
@@ -24,7 +31,8 @@ public class Heros implements ICible {
 	/**
 	 * Attribue le nom au héros
 	 * 
-	 * @param nom le nom du héros
+	 * @param nom
+	 *            le nom du héros
 	 */
 	private void setNom(String nom) {
 		if (nom == null)
@@ -35,7 +43,8 @@ public class Heros implements ICible {
 	/**
 	 * Attribue la vie au héros
 	 * 
-	 * @param vie la vie du héros
+	 * @param vie
+	 *            la vie du héros
 	 */
 	private void setVie(int vie) {
 		if (vie < 0)
@@ -43,16 +52,17 @@ public class Heros implements ICible {
 		else
 			this.vie = vie;
 	}
-	
+
 	/**
 	 * Attribue le pouvoir au héros
 	 * 
-	 * @param pouvoir le pouvoir du héros
+	 * @param pouvoir
+	 *            le pouvoir du héros
 	 */
 	private void setPouvoir(Capacite pouvoir) {
-		if ( pouvoir == null )
+		if (pouvoir == null)
 			throw new IllegalArgumentException("Le pouvoir ne peut pas être nul !");
-		
+
 		this.pouvoir = pouvoir;
 	}
 
@@ -73,9 +83,10 @@ public class Heros implements ICible {
 	public int getVie() {
 		return this.vie;
 	}
-	
+
 	/**
 	 * Retourne le pouvoir du héros
+	 * 
 	 * @return le pouvoir du héros
 	 */
 	public Capacite getPouvoir() {
@@ -85,6 +96,28 @@ public class Heros implements ICible {
 	@Override
 	public void recevoirDegats(int degats) {
 		this.setVie(this.getVie() - degats);
+	}
+
+	@Override
+	public boolean peutRecevoirDegats() {
+		IJoueur joueur = Plateau.getInstance().getJoueurCourant();
+		if (joueur.getHeros() != this) {
+			try {
+				joueur = Plateau.getInstance().getAdversaire(joueur);
+			} catch (HearthstoneException e) {
+				e.printStackTrace();
+			}
+		}
+
+		boolean provocationSurLeTerrain = false;
+		for (ICarte carte : joueur.getJeu()) {
+			if (carte.getCapacite() instanceof Provocation) {
+				provocationSurLeTerrain = true;
+				break;
+			}
+		}
+
+		return !provocationSurLeTerrain;
 	}
 
 }

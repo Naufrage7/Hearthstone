@@ -11,15 +11,15 @@ public class MarqueDuChasseur extends Capacite {
 	}
 	
 	@Override
-	public void executerAction(Object cible) throws HearthstoneException {
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
 		if ( cible == null )
 			throw new CibleInvalideException("La cible ne peut pas être nulle !");
 		
 		if ( !(cible instanceof Serviteur) )
-			throw new CibleInvalideException("Cette capacité ne s'utilise que sur un serviteur !");
+			throw new CibleInvalideException("Cette capacité s'utilise sur un serviteur uniquement !");
 		
-		Serviteur s = (Serviteur) cible;
-		s.setVie(1);
+		Serviteur serviteur = (Serviteur) cible;
+		serviteur.setVie(1);
 	}
 
 }

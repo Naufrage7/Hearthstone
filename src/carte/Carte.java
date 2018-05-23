@@ -25,21 +25,6 @@ public abstract class Carte implements ICarte {
 		this.setProprietaire(proprietaire);
 		this.setCapacite(capacite);
 	}
-	
-	/**
-	 * Instancie une nouvelle Carte
-	 * 
-	 * @param nom le nom de la carte
-	 * @param cout le cout de la carte
-	 * @param proprietaire le proprietaire de la carte
-	 */
-	public Carte(String nom, int cout, IJoueur proprietaire) {
-		this.setNom(nom);
-		this.setCout(cout);
-		this.setProprietaire(proprietaire);
-		this.setCapacite(null);
-	}
-
 
 	/**
 	 * Attribue le nom de la carte
@@ -141,9 +126,13 @@ public abstract class Carte implements ICarte {
 	}
 
 	@Override
-	public abstract boolean disparait();
+	public boolean disparait() {
+		return false;
+	}
 	
 	@Override
-	public abstract String toString();
+	public String toString() {
+		return "Carte";
+	}
 
 }

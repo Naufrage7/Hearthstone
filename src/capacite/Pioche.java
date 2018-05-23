@@ -11,15 +11,11 @@ public class Pioche extends Capacite {
 	
 	public Pioche(String nom, String description, int quantite) {
 		super(nom, description);
-		this.setQuantite(quantite);
-	}
-	
-	private void setQuantite(int quantite) {
 		this.quantite = quantite;
 	}
 	
 	@Override
-	public void executerAction(Object cible) throws HearthstoneException {
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurCourant = plateau.getJoueurCourant();
 		

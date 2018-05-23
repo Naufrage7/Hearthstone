@@ -16,6 +16,7 @@ import interactions.InteractionPouvoirHeros;
 import interactions.InteractionUtiliserCarte;
 import joueur.IJoueur;
 import joueur.Joueur;
+import capacite.ITemporisable;
 import plateau.Plateau;
 
 public class Main {
@@ -77,10 +78,10 @@ public class Main {
 	
 	public static void afficherCarteJeu(ICarte carte) {
 		if ( carte.getProprietaire() == Plateau.getInstance().getJoueurCourant() ) {
-			if ( carte instanceof Serviteur ) {
+			if ( carte instanceof ITemporisable ) {
 				String jouable = ".......";
 
-				if ( ((Serviteur)carte).peutAttaquer() )
+				if ( ((ITemporisable)carte).peutJouer() )
 					jouable = "JOUABLE";
 				
 				System.out.print(jouable + " (" + carte.getCout() + ") ");
@@ -91,6 +92,7 @@ public class Main {
 	}
 	
 	public static void afficherTerrain() {
+		System.out.println("Afficher terrain");
 		IJoueur joueurCourant = Plateau.getInstance().getJoueurCourant();
 		IJoueur joueurAdverse = null;
 		
@@ -185,8 +187,8 @@ public class Main {
 		creerInteractions();
 		Plateau plateau = Plateau.getInstance();
 		
-		IJoueur j1 = new Joueur("Théo", new Heros("Jaina", 15, new AttaqueCiblee("Boule de feu", 1)));
-		IJoueur j2 = new Joueur("Alex", new Heros("Rexxar", 15, new AttaqueCiblee("Petite flèche", 1)));
+		IJoueur j1 = new Joueur("Théo", new Heros("Jaina", 15, new AttaqueCiblee("Boule de feu", "Inflige 1 de dégats", 1)));
+		IJoueur j2 = new Joueur("Alex", new Heros("Rexxar", 15, new AttaqueCiblee("Petite flèche", "Inflige 1 de dégats", 1)));
 		
 		try {
 			plateau.ajouterJoueur(j1);

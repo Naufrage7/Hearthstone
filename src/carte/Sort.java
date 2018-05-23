@@ -18,20 +18,15 @@ public class Sort extends Carte {
 		super(nom, cout, capacite, proprietaire);
 	}
 	
-	public String toString() {
-		return this.getNom() + " ( " + this.getCapacite().getDescription() + " )";
-	}
-	
 	@Override
 	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
 		super.executerEffetDebutMiseEnJeu(cible);
-		IJoueur joueurProprietaire = getProprietaire();
-		joueurProprietaire.perdreCarte(this);
+		getProprietaire().perdreCarte(this);
 	}
-
+	
 	@Override
-	public boolean disparait() {
-		return true;
+	public String toString() {
+		return this.getNom() + " ( " + this.getCapacite().getDescription() + " )";
 	}
 	
 }

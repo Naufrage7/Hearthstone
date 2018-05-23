@@ -2,6 +2,7 @@ package carte;
 
 import capacite.Capacite;
 import capacite.IBonifiable;
+import capacite.ITemporisable;
 import capacite.Provocation;
 import exception.CibleInvalideException;
 import exception.HearthstoneException;
@@ -9,33 +10,12 @@ import joueur.IJoueur;
 import plateau.IPlateau;
 import plateau.Plateau;
 
-public class Serviteur extends Carte implements ICible, IBonifiable {
+public class Serviteur extends Carte implements ICible, IBonifiable, ITemporisable {
 
 	private int vie;
 	private int attaque;
-	private boolean peutAttaquer;
+	private boolean peutJouer;
 
-	/**
-	 * Constructeur de la classe Serviteur
-	 * 
-	 * @param attaque
-	 *            l'attaque du serviteur
-	 * @param vie
-	 *            la vie du serviteur
-	 * @param nom
-	 *            le nom du serviteur
-	 * @param cout
-	 *            le cout du serviteur
-	 * @param proprietaire
-	 *            le propriétaire du serviteur
-	 */
-	public Serviteur(int attaque, int vie, String nom, int cout, IJoueur proprietaire) {
-		super(nom, cout, proprietaire);
-		this.setAttaque(attaque);
-		this.setVie(vie);
-		this.setPeutAttaquer(false);
-	}
-	
 	/**
 	 * Constructeur de la classe Serviteur
 	 * 
@@ -48,7 +28,7 @@ public class Serviteur extends Carte implements ICible, IBonifiable {
 	 * @param cout
 	 *            le cout du serviteur
 	 * @param capacite
-	 * 			  la capacité du serviteur
+	 *            la capacité du serviteur
 	 * @param proprietaire
 	 *            le propriétaire du serviteur
 	 */
@@ -56,15 +36,7 @@ public class Serviteur extends Carte implements ICible, IBonifiable {
 		super(nom, cout, capacite, proprietaire);
 		this.setAttaque(attaque);
 		this.setVie(vie);
-		this.setPeutAttaquer(false);
-	}
-
-
-	public Serviteur(Serviteur serviteur) {
-		super(serviteur.getNom(), serviteur.getCout(), new Capacite(serviteur.getCapacite()), serviteur.getProprietaire());
-		this.setAttaque(serviteur.getAttaque());
-		this.setVie(serviteur.getVie());
-		this.setPeutAttaquer(false);
+		this.setPeutJouer(false);
 	}
 
 	/**
@@ -74,11 +46,10 @@ public class Serviteur extends Carte implements ICible, IBonifiable {
 	 *            l'attaque du serviteur
 	 */
 	public void setAttaque(int attaque) {
-		if (attaque >= 0) {
-			this.attaque = attaque;
-		} else {
-			throw new IllegalArgumentException("L'attaque du serviteur ne peut pas être une valeur négative !");
-		}
+		if (attaque < 0)
+			throw new IllegalArgumentException("L'attaque du serviteur doit être une valeur positive !");
+
+		this.attaque = attaque;
 	}
 
 	/**
@@ -88,18 +59,17 @@ public class Serviteur extends Carte implements ICible, IBonifiable {
 	 *            la vie du serviteur
 	 */
 	public void setVie(int vie) {
-		if (vie >= 0) {
+		if (vie >= 0)
 			this.vie = vie;
-		} else {
-			vie = 0;
-		}
+		else
+			this.vie = 0;
 	}
 
 	/**
 	 * Attribue la possibilite d'attaquer pour un serviteur
 	 */
-	public void setPeutAttaquer(boolean peutAttaquer) {
-		this.peutAttaquer = peutAttaquer;
+	public void setPeutJouer(boolean peutJouer) {
+		this.peutJouer = peutJouer;
 	}
 
 	/**
@@ -125,27 +95,27 @@ public class Serviteur extends Carte implements ICible, IBonifiable {
 	 * 
 	 * @return la possibilite au serviteur d'attaquer
 	 */
-	public boolean peutAttaquer() {
-		return this.peutAttaquer;
+	public boolean peutJouer() {
+		return this.peutJouer;
 	}
-	
+
 	public boolean disparait() {
 		return this.vie <= 0;
 	}
-	
+
 	public void attaquer(Object cible) throws HearthstoneException {
-		if ( !(cible instanceof ICible) )
+		if (!(cible instanceof ICible))
 			throw new CibleInvalideException("La cible ne peut pas être nulle !");
-		
+
 		ICible cibleVisee = (ICible) cible;
-		if ( cibleVisee.peutRecevoirDegats() ) {
+		if (cibleVisee.peutRecevoirDegats()) {
 			cibleVisee.recevoirDegats(attaque);
 			setVie(getVie() - cibleVisee.getVie());
 		} else {
 			throw new CibleInvalideException("La cible ne peut pas recevoir de dégats !");
 		}
 	}
-	
+
 	@Override
 	public void recevoirDegats(int degats) {
 		this.setVie(this.getVie() - degats);
@@ -154,11 +124,15 @@ public class Serviteur extends Carte implements ICible, IBonifiable {
 	@Override
 	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
 		super.executerEffetDebutMiseEnJeu(cible);
-		
+
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurCourant = plateau.getJoueurCourant();
+		IJoueur joueurAdverse = plateau.getAdversaire(joueurCourant);
+
+		for (ICarte carte : joueurCourant.getJeu())
+			carte.executerAction(this);
 		
-		for ( ICarte carte : joueurCourant.getJeu() )
+		for (ICarte carte : joueurAdverse.getJeu())
 			carte.executerAction(this);
 	}
 
@@ -167,7 +141,7 @@ public class Serviteur extends Carte implements ICible, IBonifiable {
 		setVie(getVie() + bonusVie);
 		setAttaque(getAttaque() + bonusAttaque);
 	}
-	
+
 	@Override
 	public void retirerBonus(int bonusVie, int bonusAttaque) {
 		setVie(getVie() - bonusVie);
@@ -176,36 +150,35 @@ public class Serviteur extends Carte implements ICible, IBonifiable {
 
 	@Override
 	public boolean peutRecevoirDegats() {
-		if ( super.getCapacite() instanceof Provocation )
+		if (super.getCapacite() instanceof Provocation)
 			return true;
-		
+
 		IJoueur joueurProprietaire = super.getProprietaire();
-		
+
 		boolean provocationSurLeTerrain = false;
-		for ( ICarte carte : joueurProprietaire.getJeu() ) {
-			if ( carte.getCapacite() instanceof Provocation ) {
+		for (ICarte carte : joueurProprietaire.getJeu()) {
+			if (carte.getCapacite() instanceof Provocation) {
 				provocationSurLeTerrain = true;
 				break;
 			}
 		}
-		
+
 		return !provocationSurLeTerrain;
 	}
-	
+
 	/**
 	 * Retourne le toString de Serviteur
 	 * 
-	 * @return le string de l'attaque, la vie , le nom , le cout et le
-	 *         propriétaire
+	 * @return le string de l'attaque, la vie , le nom , le cout et le propriétaire
 	 */
 	public String toString() {
 		String toString = "";
 		toString += this.getNom() + " " + this.getAttaque() + "/" + this.getVie();
-		if ( this.getCapacite() != null )
+		if (this.getCapacite() != null)
 			toString += " ( " + this.getCapacite().getNom() + " : " + this.getCapacite().getDescription() + " )";
 		else
 			toString += " ( Sans capacité )";
 		return toString;
 	}
-	
+
 }

@@ -1,7 +1,7 @@
 package capacite;
 
 import carte.ICarte;
-import carte.Serviteur;
+import carte.ICible;
 import exception.HearthstoneException;
 import joueur.IJoueur;
 import plateau.IPlateau;
@@ -9,21 +9,21 @@ import plateau.Plateau;
 
 public class AttaqueTotale extends AttaqueCiblee {
 	
-	public AttaqueTotale(String nom, int degats) {
-		super("Infligde " + degats + " de dégats à tous les serviteurs adverses", degats);
+	public AttaqueTotale(String nom, String description, int degats) {
+		super(nom, description, degats);
 	}
 	
 	@Override
-	public void executerAction(Object cible) throws HearthstoneException {
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
 		IPlateau plateau = Plateau.getInstance();
-		IJoueur joueurCourant = plateau.getJoueurCourant();
-		IJoueur joueurAdverse = plateau.getAdversaire(joueurCourant);
+		IJoueur joueurAdverse = plateau.getAdversaire(plateau.getJoueurCourant());
 		
 		for ( ICarte carte : joueurAdverse.getJeu() ) {
-			if ( carte instanceof Serviteur ) {
-				Serviteur serviteur = (Serviteur) carte;
-				serviteur.setVie(serviteur.getVie() - getDegats());
-			}
+			if ( !(carte instanceof ICible) )
+				continue;
+			
+			ICible cibleVisee = (ICible) cible;
+			cibleVisee.recevoirDegats(getDegats());
 		}
 	}
 

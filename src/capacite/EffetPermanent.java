@@ -40,7 +40,16 @@ public class EffetPermanent extends Capacite {
 	
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
-		executerAction(cible);
+		IPlateau plateau = Plateau.getInstance();
+		IJoueur joueurCourant = plateau.getJoueurCourant();
+
+		for (ICarte carte : joueurCourant.getJeu()) {
+			if (!(carte instanceof IBonifiable) || carte.getCapacite() == this)
+				continue;
+			
+			IBonifiable bonifiable = (IBonifiable) carte;
+			bonifiable.ajouterBonus(bonusVie, bonusAttaque);
+		}
 	}
 
 	@Override
@@ -69,5 +78,10 @@ public class EffetPermanent extends Capacite {
 			if (this.bonifiablesAffectes.contains(bonifiable))
 				bonifiable.retirerBonus(bonusVie, bonusAttaque);
 		}
+	}
+
+	@Override
+	public boolean necessiteCible() {
+		return false;
 	}
 }

@@ -21,4 +21,9 @@ public class Charge extends Capacite {
 		temporisable.setPeutJouer(true);
 	}
 
+	@Override
+	public boolean necessiteCible() {
+		return true;
+	}
+
 }

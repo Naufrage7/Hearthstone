@@ -33,4 +33,9 @@ public class AttaqueCiblee extends Capacite {
 		cibleVisee.recevoirDegats(this.degats);
 	}
 
+	@Override
+	public boolean necessiteCible() {
+		return true;
+	}
+
 }

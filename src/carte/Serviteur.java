@@ -181,4 +181,14 @@ public class Serviteur extends Carte implements ICible, IBonifiable, ITemporisab
 		return toString;
 	}
 
+	@Override
+	public boolean necessiteCible() {
+		return true;
+	}
+
+	@Override
+	public void executerAction(Object cible) throws HearthstoneException {
+		attaquer(cible);		
+	}
+	
 }

@@ -6,4 +6,9 @@ public class Provocation extends Capacite {
 		super(nom, description);
 	}
 
+	@Override
+	public boolean necessiteCible() {
+		return false;
+	}
+
 }

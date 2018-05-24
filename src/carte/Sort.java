@@ -28,5 +28,15 @@ public class Sort extends Carte {
 	public String toString() {
 		return this.getNom() + " ( " + this.getCapacite().getDescription() + " )";
 	}
+
+	@Override
+	public boolean necessiteCible() {
+		return super.getCapacite().necessiteCible();
+	}
+
+	@Override
+	public void executerAction(Object cible) throws HearthstoneException {
+		super.getCapacite().executerAction(cible);
+	}
 	
 }

@@ -120,15 +120,15 @@ public abstract class Carte implements ICarte {
 	}
 
 	@Override
-	public void executerAction(Object cible) throws HearthstoneException {
-		if ( this.capacite != null )
-			this.capacite.executerAction(cible);
-	}
-
+	public abstract void executerAction(Object cible) throws HearthstoneException;
+	
 	@Override
 	public boolean disparait() {
 		return false;
 	}
+	
+	@Override
+	public abstract boolean necessiteCible();
 	
 	@Override
 	public String toString() {

@@ -2,7 +2,7 @@ package capacite;
 
 import exception.HearthstoneException;
 
-public class Capacite implements ICapacite {
+public abstract class Capacite implements ICapacite {
 
 	private String nom;
 	private String description;
@@ -87,4 +87,7 @@ public class Capacite implements ICapacite {
 	public String toString() {
 		return "Capacite [nom=" + this.nom + ", description=" + this.description + "]";
 	}
+
+	@Override
+	public abstract boolean necessiteCible();
 }

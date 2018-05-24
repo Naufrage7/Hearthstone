@@ -92,7 +92,6 @@ public class Main {
 	}
 	
 	public static void afficherTerrain() {
-		System.out.println("Afficher terrain");
 		IJoueur joueurCourant = Plateau.getInstance().getJoueurCourant();
 		IJoueur joueurAdverse = null;
 		

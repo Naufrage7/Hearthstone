@@ -247,14 +247,22 @@ public class Joueur implements IJoueur {
 			throw new HearthstoneException("Impossible de jouer une carte coutant plus de mana que le joueur n'en possède.");
 	
 		try {
-			carte.executerEffetDebutMiseEnJeu(cible);
-			
 			this.stockMana -= carte.getCout();
 			this.main.remove(carte);
 			this.jeu.add(carte);
+			
+			carte.executerEffetDebutMiseEnJeu(cible);
 		} catch (CibleInvalideException e ) {
+			this.stockMana += carte.getCout();
+			this.main.add(carte);
+			this.jeu.remove(carte);
+			
 			throw e;
 		} catch (HearthstoneException e) {
+			this.stockMana += carte.getCout();
+			this.main.add(carte);
+			this.jeu.remove(carte);
+			
 			System.out.println(e.getMessage());
 		}
 	}

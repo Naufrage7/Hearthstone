@@ -65,4 +65,6 @@ public interface ICapacite {
 	 *             En cas de problème...
 	 */
 	void executerEffetDisparition(Object cible) throws HearthstoneException;
+	
+	boolean necessiteCible();
 }

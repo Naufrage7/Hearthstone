@@ -22,4 +22,9 @@ public class MarqueDuChasseur extends Capacite {
 		serviteur.setVie(1);
 	}
 
+	@Override
+	public boolean necessiteCible() {
+		return true;
+	}
+
 }

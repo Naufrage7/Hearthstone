@@ -22,5 +22,10 @@ public class Pioche extends Capacite {
 		for ( int i = 0; i < this.quantite; i++ )
 			joueurCourant.piocher();
 	}
+
+	@Override
+	public boolean necessiteCible() {
+		return false;
+	}
 	
 }

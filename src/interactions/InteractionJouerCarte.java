@@ -26,28 +26,28 @@ public class InteractionJouerCarte extends Interaction {
 		System.out.print("Nom de la carte : ");
 		String nomCarte = sc.nextLine();
 		
-		Plateau plateau = Plateau.getInstance();
-		IJoueur joueurCourant = plateau.getJoueurCourant();
+		if ( nomCarte.length() == 0 )
+			return;
+
+		IJoueur joueurCourant = Plateau.getInstance().getJoueurCourant();
 		
 		ICarte carte = joueurCourant.getCarteEnMain(nomCarte);
 		if ( carte == null )
 			return;
 		
-		try {
-			joueurCourant.jouerCarte(carte);
-		} catch ( CibleInvalideException e ) {
+		if ( carte.necessiteCible() ) {
 			Object cible = Main.demanderCible();
-			if ( cible == null ) {
-				System.out.println("La cible n'existe pas ...");
-			} else {
-				try {
-					joueurCourant.jouerCarte(carte, cible);
-				} catch (HearthstoneException e2) {
-					System.out.println(e2.getMessage());
-				}
+			try {
+				joueurCourant.jouerCarte(carte, cible);
+			} catch (HearthstoneException e) {
+				e.printStackTrace();
 			}
-		} catch ( HearthstoneException e ) {
-			System.out.println(e.getMessage());
+		} else {
+			try {
+				joueurCourant.jouerCarte(carte);
+			} catch (HearthstoneException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

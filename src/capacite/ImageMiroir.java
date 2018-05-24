@@ -13,4 +13,9 @@ public class ImageMiroir extends Capacite {
 		super(nom, description);
 	}
 
+	@Override
+	public boolean necessiteCible() {
+		return false;
+	}
+
 }

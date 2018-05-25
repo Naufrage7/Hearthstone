@@ -1,6 +1,7 @@
 package capacite;
-import carte.ICarte;
+import carte.Serviteur;
 import exception.HearthstoneException;
+import plateau.Plateau;
 
 public class ImageMiroir extends Capacite {
 	
@@ -28,8 +29,8 @@ public class ImageMiroir extends Capacite {
 
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
-		// TODO Auto-generated method stub
-		
+		for ( int i = 0; i < 2; i++ ) 
+			Plateau.getInstance().getJoueurCourant().jouerCarte(new Serviteur(0, 2, "Protecteur de Jaina", 0, new Provocation("Provocation", "Oblige l'adversaire a cibler ce joueur"), Plateau.getInstance().getJoueurCourant()));
 	}
 
 	@Override

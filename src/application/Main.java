@@ -157,7 +157,7 @@ public class Main {
 			
 			plateau.demarrerPartie();
 			
-			for ( int i = 0; i < 20 * 2; i++ ) {
+			for ( int i = 0; i < 10 * 2; i++ ) {
 				try {
 					IJoueur joueurCourant = plateau.getJoueurCourant();
 					

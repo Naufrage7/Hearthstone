@@ -123,6 +123,8 @@ public class Serviteur extends Carte implements ICible, IBonifiable, ITemporisab
 
 	@Override
 	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
+		super.executerEffetDebutMiseEnJeu(cible);
+
 		if ( super.getCapacite() != null ) {
 			if ( super.getCapacite().seLanceSurServiteurProprietaire() )
 				super.getCapacite().executerEffetMiseEnJeu(this);

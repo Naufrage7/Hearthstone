@@ -1,6 +1,7 @@
 package carte;
 
 import capacite.Capacite;
+import capacite.EffetPermanent;
 import exception.HearthstoneException;
 import joueur.IJoueur;
 
@@ -102,7 +103,12 @@ public abstract class Carte implements ICarte {
 	public abstract void executerEffetFinTour(Object cible) throws HearthstoneException;
 
 	@Override
-	public abstract void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException;
+	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
+		for ( ICarte carte : proprietaire.getJeu() ) {
+			if ( carte.getCapacite() instanceof EffetPermanent )
+				carte.getCapacite().executerAction(this);
+		}
+	}
 
 	@Override
 	public abstract void executerEffetDisparition(Object cible) throws HearthstoneException;

@@ -2,9 +2,9 @@ package capacite;
 
 import java.util.ArrayList;
 
-import carte.Carte;
 import carte.ICarte;
-import carte.Serviteur;
+import carte.ICible;
+import exception.CibleInvalideException;
 import exception.HearthstoneException;
 import joueur.IJoueur;
 import plateau.IPlateau;
@@ -54,14 +54,16 @@ public class EffetPermanent extends Capacite {
 
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
+		if ( cible == null )
+			throw new CibleInvalideException("");
+		
+		if ( !(cible instanceof ICible) )
+			throw new CibleInvalideException("");
+		
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurCourant = plateau.getJoueurCourant();
 
-		ICarte carte = joueurCourant.getJeu().get(joueurCourant.getJeu().size() - 1);
-		if (!(carte instanceof IBonifiable) || carte.getCapacite() == this)
-			return;
-
-		IBonifiable bonifiable = (IBonifiable) carte;
+		IBonifiable bonifiable = (IBonifiable) cible;
 		bonifiable.ajouterBonus(bonusVie, bonusAttaque);
 	}
 
@@ -94,9 +96,7 @@ public class EffetPermanent extends Capacite {
 
 	@Override
 	public boolean seLanceSurServiteurProprietaire() {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
 
 }

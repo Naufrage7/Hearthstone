@@ -22,7 +22,7 @@ public class AttaqueTotale extends AttaqueCiblee {
 			if ( !(carte instanceof ICible) )
 				continue;
 			
-			ICible cibleVisee = (ICible) cible;
+			ICible cibleVisee = (ICible) carte;
 			cibleVisee.recevoirDegats(getDegats());
 		}
 	}

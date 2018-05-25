@@ -96,39 +96,22 @@ public abstract class Carte implements ICarte {
 	}
 
 	@Override
-	public void executerEffetDebutTour(Object cible) throws HearthstoneException {
-		if ( this.capacite != null )
-			this.capacite.executerEffetDebutTour();
-	}
+	public abstract void executerEffetDebutTour(Object cible) throws HearthstoneException;
 
 	@Override
-	public void executerEffetFinTour(Object cible) throws HearthstoneException {
-		if ( this.capacite != null )
-			this.capacite.executerEffetFinTour();
-	}
+	public abstract void executerEffetFinTour(Object cible) throws HearthstoneException;
 
 	@Override
-	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
-		if ( this.capacite != null )
-			this.capacite.executerEffetMiseEnJeu(cible);
-	}
+	public abstract void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException;
 
 	@Override
-	public void executerEffetDisparition(Object cible) throws HearthstoneException {
-		if ( this.capacite != null )
-			this.capacite.executerEffetDisparition(cible);
-	}
+	public abstract void executerEffetDisparition(Object cible) throws HearthstoneException;
 
 	@Override
 	public abstract void executerAction(Object cible) throws HearthstoneException;
 	
 	@Override
-	public boolean disparait() {
-		return false;
-	}
-	
-	@Override
-	public abstract boolean necessiteCible();
+	public abstract boolean disparait();
 	
 	@Override
 	public String toString() {

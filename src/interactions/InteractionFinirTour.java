@@ -20,7 +20,9 @@ public class InteractionFinirTour extends Interaction {
 		try {
 			Plateau plateau = Plateau.getInstance();
 			IJoueur joueurCourant = plateau.getJoueurCourant();
+			
 			joueurCourant.finirTour();
+			
 			plateau.setJoueurCourant(plateau.getAdversaire(joueurCourant));
 			plateau.getJoueurCourant().prendreTour();
 		} catch ( HearthstoneException e ) {

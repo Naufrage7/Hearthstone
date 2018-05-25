@@ -12,7 +12,7 @@ public abstract class Interaction {
 	
 	public Interaction setSuivant(Interaction interaction) {
 		if ( interaction == null )
-			throw new IllegalArgumentException("L'intéraction ne peut pas être nulle !");
+			throw new IllegalArgumentException("L'intéraction suivante ne peut pas être nulle !");
 		
 		suivant = interaction;
 		return suivant;

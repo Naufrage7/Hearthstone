@@ -1,5 +1,6 @@
 package capacite;
 
+import carte.ICarte;
 import carte.ICible;
 import exception.CibleInvalideException;
 import exception.HearthstoneException;
@@ -23,6 +24,7 @@ public class AttaqueCiblee extends Capacite {
 	
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+		// TODO Auto-generated method stub
 		if ( cible == null )
 			throw new CibleInvalideException("La cible ne peut pas être nulle.");
 		
@@ -30,12 +32,36 @@ public class AttaqueCiblee extends Capacite {
 			throw new CibleInvalideException("La cible doit être une cible valide.");
 		
 		ICible cibleVisee = (ICible) cible;
-		cibleVisee.recevoirDegats(this.degats);
+		cibleVisee.recevoirDegats(this.degats);	
 	}
 
 	@Override
-	public boolean necessiteCible() {
-		return true;
+	public void executerEffetDebutTour() throws HearthstoneException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void executerEffetFinTour() throws HearthstoneException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void executerAction(Object cible) throws HearthstoneException {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void executerEffetDisparition(Object cible) throws HearthstoneException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean seLanceSurServiteurProprietaire() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

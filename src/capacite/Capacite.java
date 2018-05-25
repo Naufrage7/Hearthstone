@@ -1,5 +1,6 @@
 package capacite;
 
+import carte.ICarte;
 import exception.HearthstoneException;
 
 public abstract class Capacite implements ICapacite {
@@ -17,11 +18,6 @@ public abstract class Capacite implements ICapacite {
 	public Capacite(String nom, String description) {
 		this.setNom(nom);
 		this.setDescription(description);
-	}
-
-	public Capacite(Capacite capacite) {
-		this.setNom(capacite.getNom());
-		this.setDescription(capacite.getDescription());
 	}
 
 	/***
@@ -65,29 +61,25 @@ public abstract class Capacite implements ICapacite {
 	}
 
 	@Override
-	public void executerEffetDebutTour() throws HearthstoneException {
-	}
+	public abstract void executerEffetDebutTour() throws HearthstoneException;
 
 	@Override
-	public void executerEffetFinTour() throws HearthstoneException {
-	}
+	public abstract void executerEffetFinTour() throws HearthstoneException;
 
 	@Override
-	public void executerAction(Object cible) throws HearthstoneException {
-	}
+	public abstract void executerAction(Object cible) throws HearthstoneException;
 
 	@Override
-	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
-	}
+	public abstract void executerEffetMiseEnJeu(Object cible) throws HearthstoneException;
 
 	@Override
-	public void executerEffetDisparition(Object cible) throws HearthstoneException {
-	}
+	public abstract void executerEffetDisparition(Object cible) throws HearthstoneException;
+	
+	@Override
+	public abstract boolean seLanceSurServiteurProprietaire();
 
 	public String toString() {
 		return "Capacite [nom=" + this.nom + ", description=" + this.description + "]";
 	}
 
-	@Override
-	public abstract boolean necessiteCible();
 }

@@ -20,7 +20,9 @@ public class Sort extends Carte {
 	
 	@Override
 	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
-		super.executerEffetDebutMiseEnJeu(cible);
+		if ( super.getCapacite() != null )
+			super.getCapacite().executerEffetMiseEnJeu(cible);
+		
 		getProprietaire().perdreCarte(this);
 	}
 	
@@ -30,13 +32,31 @@ public class Sort extends Carte {
 	}
 
 	@Override
-	public boolean necessiteCible() {
-		return super.getCapacite().necessiteCible();
+	public void executerAction(Object cible) throws HearthstoneException {
+		super.getCapacite().executerAction(cible);
 	}
 
 	@Override
-	public void executerAction(Object cible) throws HearthstoneException {
-		super.getCapacite().executerAction(cible);
+	public void executerEffetDebutTour(Object cible) throws HearthstoneException {
+		if ( super.getCapacite() != null )
+			super.getCapacite().executerEffetDebutTour();
+	}
+
+	@Override
+	public void executerEffetFinTour(Object cible) throws HearthstoneException {
+		if ( super.getCapacite() != null )
+			super.getCapacite().executerEffetFinTour();		
+	}
+
+	@Override
+	public void executerEffetDisparition(Object cible) throws HearthstoneException {
+		if ( super.getCapacite() != null )
+			super.getCapacite().executerEffetDisparition(cible);
+	}
+
+	@Override
+	public boolean disparait() {
+		return true;
 	}
 	
 }

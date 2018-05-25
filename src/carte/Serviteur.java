@@ -123,17 +123,12 @@ public class Serviteur extends Carte implements ICible, IBonifiable, ITemporisab
 
 	@Override
 	public void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException {
-		super.executerEffetDebutMiseEnJeu(cible);
-
-		IPlateau plateau = Plateau.getInstance();
-		IJoueur joueurCourant = plateau.getJoueurCourant();
-		IJoueur joueurAdverse = plateau.getAdversaire(joueurCourant);
-
-		for (ICarte carte : joueurCourant.getJeu())
-			carte.executerAction(this);
-		
-		for (ICarte carte : joueurAdverse.getJeu())
-			carte.executerAction(this);
+		if ( super.getCapacite() != null ) {
+			if ( super.getCapacite().seLanceSurServiteurProprietaire() )
+				super.getCapacite().executerEffetMiseEnJeu(this);
+			else
+				super.getCapacite().executerEffetMiseEnJeu(cible);
+		}
 	}
 
 	@Override
@@ -182,13 +177,26 @@ public class Serviteur extends Carte implements ICible, IBonifiable, ITemporisab
 	}
 
 	@Override
-	public boolean necessiteCible() {
-		return true;
+	public void executerAction(Object cible) throws HearthstoneException {
+		attaquer(cible);		
 	}
 
 	@Override
-	public void executerAction(Object cible) throws HearthstoneException {
-		attaquer(cible);		
+	public void executerEffetDebutTour(Object cible) throws HearthstoneException {
+		if ( super.getCapacite() != null )
+			super.getCapacite().executerEffetDebutTour();
+	}
+
+	@Override
+	public void executerEffetFinTour(Object cible) throws HearthstoneException {
+		if ( super.getCapacite() != null )
+			super.getCapacite().executerEffetFinTour();
+	}
+
+	@Override
+	public void executerEffetDisparition(Object cible) throws HearthstoneException {
+		if ( super.getCapacite() != null )
+			super.getCapacite().executerEffetDisparition(cible);
 	}
 	
 }

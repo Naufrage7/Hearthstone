@@ -1,11 +1,6 @@
 package capacite;
-import java.util.ArrayList;
-
-import carte.Serviteur;
+import carte.ICarte;
 import exception.HearthstoneException;
-import joueur.IJoueur;
-import plateau.IPlateau;
-import plateau.Plateau;
 
 public class ImageMiroir extends Capacite {
 	
@@ -14,8 +9,39 @@ public class ImageMiroir extends Capacite {
 	}
 
 	@Override
-	public boolean necessiteCible() {
+	public void executerEffetDebutTour() throws HearthstoneException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void executerEffetFinTour() throws HearthstoneException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void executerAction(Object cible) throws HearthstoneException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void executerEffetDisparition(Object cible) throws HearthstoneException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean seLanceSurServiteurProprietaire() {
 		return false;
 	}
+
 
 }

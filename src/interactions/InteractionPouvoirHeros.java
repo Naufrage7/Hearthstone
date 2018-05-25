@@ -23,21 +23,6 @@ public class InteractionPouvoirHeros extends Interaction {
 		Plateau plateau = Plateau.getInstance();
 		IJoueur joueurCourant = plateau.getJoueurCourant();
 		IJoueur joueurAdverse = null;
-		
-		try {
-			joueurAdverse = plateau.getAdversaire(joueurCourant);
-		} catch (HearthstoneException e) {
-			e.printStackTrace();
-		}
-		
-		Object cible = Main.demanderCible();
-		
-		try {
-			joueurCourant.getHeros().getPouvoir().executerAction(cible);
-		} catch ( HearthstoneException e2 ) {
-			System.out.println(e2.getMessage());
-		}
-
 	}
 
 }

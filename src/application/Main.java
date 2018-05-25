@@ -23,44 +23,6 @@ public class Main {
 	
 	private static Interaction interactions;
 	
-	public static Object demanderCible() {
-		Scanner sc = new Scanner(System.in);
-		IJoueur joueurCourant = Plateau.getInstance().getJoueurCourant();
-		Object cible = null;
-		IJoueur joueurAdverse = null;
-		
-		try {
-			joueurAdverse = Plateau.getInstance().getAdversaire(Plateau.getInstance().getJoueurCourant());
-		} catch (HearthstoneException e) {
-			e.printStackTrace();
-		}
-		
-		System.out.println("Qui vises-tu ?");
-		System.out.println(" - 1. Le héros adverse");
-		System.out.println(" - 2. Un serviteur adverse");
-		System.out.println(" - 3. Un serviteur allié");
-		int choix = recupererChoix();
-		String nomCarte = "";
-		
-		switch ( choix ) {
-			case 1:
-				cible = joueurAdverse.getHeros();
-				break;
-			case 2:
-				System.out.print("Nom du serviteur : ");
-				nomCarte = sc.nextLine();
-				cible = joueurAdverse.getCarteEnJeu(nomCarte);
-				break;
-			case 3:
-				System.out.print("Nom du serviteur : ");
-				nomCarte = sc.nextLine();
-				cible = joueurCourant.getCarteEnJeu(nomCarte);
-				break;
-		}
-		
-		return cible;
-	}
-	
 	public static void afficherCarteMain(ICarte carte) {	
 		System.out.print("## ");
 		
@@ -194,15 +156,28 @@ public class Main {
 			plateau.ajouterJoueur(j2);
 			
 			plateau.demarrerPartie();
+			
+			for ( int i = 0; i < 20 * 2; i++ ) {
+				try {
+					IJoueur joueurCourant = plateau.getJoueurCourant();
+					
+					joueurCourant.finirTour();
+					
+					plateau.setJoueurCourant(plateau.getAdversaire(joueurCourant));
+					plateau.getJoueurCourant().prendreTour();
+				} catch ( HearthstoneException e ) {
+					e.printStackTrace();
+				}
+			}
+			
+			while ( plateau.estDemarree() ) {
+				afficherHud();
+				afficherMain();				
+				afficherTerrain();
+				afficherMenu(interactions);
+			}
 		} catch ( HearthstoneException e ) {
 			e.printStackTrace();
-		}
-			
-		while ( plateau.estDemarree() ) {
-			afficherHud();
-			afficherMain();				
-			afficherTerrain();
-			afficherMenu(interactions);
 		}
 	}
 

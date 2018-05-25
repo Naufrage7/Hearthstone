@@ -81,7 +81,22 @@ public class EffetPermanent extends Capacite {
 	}
 
 	@Override
-	public boolean necessiteCible() {
+	public void executerEffetDebutTour() throws HearthstoneException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void executerEffetFinTour() throws HearthstoneException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean seLanceSurServiteurProprietaire() {
+		// TODO Auto-generated method stub
 		return false;
 	}
+
+
 }

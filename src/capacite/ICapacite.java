@@ -1,5 +1,6 @@
 package capacite;
 
+import carte.ICarte;
 import exception.HearthstoneException;
 
 /**
@@ -65,6 +66,6 @@ public interface ICapacite {
 	 *             En cas de problème...
 	 */
 	void executerEffetDisparition(Object cible) throws HearthstoneException;
-	
-	boolean necessiteCible();
+
+	boolean seLanceSurServiteurProprietaire();
 }

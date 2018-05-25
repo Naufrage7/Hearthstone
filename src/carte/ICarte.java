@@ -55,7 +55,6 @@ public interface ICarte extends Cloneable {
 	 * @throws HearthstoneException
 	 */
 	void executerEffetDebutMiseEnJeu(Object cible) throws HearthstoneException;
-
 	/**
 	 * Une carte peut avoir un effet au moment de sa disparition du jeu
 	 * 
@@ -89,7 +88,5 @@ public interface ICarte extends Cloneable {
 	 * @return true si la carte est foutu (un serviteur tué, un sort lancé, etc.)
 	 */
 	boolean disparait();
-
-	boolean necessiteCible();
 
 }

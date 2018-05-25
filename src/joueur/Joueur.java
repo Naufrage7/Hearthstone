@@ -21,6 +21,7 @@ import carte.Sort;
 import exception.CibleInvalideException;
 import exception.HearthstoneException;
 import heros.Heros;
+import plateau.Plateau;
 
 public class Joueur implements IJoueur {
 	
@@ -195,16 +196,7 @@ public class Joueur implements IJoueur {
 			System.out.println(e.getMessage());
 		}
 		
-		for ( ICarte carte : this.jeu ) {
-			try {
-				carte.executerEffetDebutTour(null);
-			} catch ( CibleInvalideException e ) {
-				Object cible = Main.demanderCible();
-				carte.executerEffetDebutTour(cible);
-			} catch ( HearthstoneException e ) {
-				System.out.println(e.getMessage());
-			}
-			
+		for ( ICarte carte : this.jeu ) {			
 			if ( carte instanceof ITemporisable ) {
 				ITemporisable temporisable = (ITemporisable) carte;
 				if ( !temporisable.peutJouer() )
@@ -215,16 +207,8 @@ public class Joueur implements IJoueur {
 
 	@Override
 	public void finirTour() throws HearthstoneException {
-		for ( ICarte carte : this.jeu ) {			
-			try {
-				carte.executerEffetFinTour(null);
-			} catch ( CibleInvalideException e ) {
-				Object cible = Main.demanderCible();
-				carte.executerEffetFinTour(cible);
-			} catch ( HearthstoneException e ) {
-				e.printStackTrace();
-			}
-		}
+		if ( Plateau.getInstance().getJoueurCourant() != this )
+			throw new HearthstoneException("Impossible, tu n'es pas en train de jouer ...");
 	}
 
 	@Override

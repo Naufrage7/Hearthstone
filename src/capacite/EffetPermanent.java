@@ -49,6 +49,7 @@ public class EffetPermanent extends Capacite {
 			
 			IBonifiable bonifiable = (IBonifiable) carte;
 			bonifiable.ajouterBonus(bonusVie, bonusAttaque);
+			bonifiablesAffectes.add(bonifiable);
 		}
 	}
 
@@ -64,6 +65,14 @@ public class EffetPermanent extends Capacite {
 		IJoueur joueurCourant = plateau.getJoueurCourant();
 
 		IBonifiable bonifiable = (IBonifiable) cible;
+		if ( bonifiablesAffectes.contains(bonifiable) )
+			return;
+		
+		if ( cible instanceof ICarte ) {
+			if ( ((ICarte)cible).getCapacite() == this )
+				return;
+		}
+		
 		bonifiable.ajouterBonus(bonusVie, bonusAttaque);
 	}
 
@@ -72,14 +81,8 @@ public class EffetPermanent extends Capacite {
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurCourant = plateau.getJoueurCourant();
 
-		for (ICarte carte : joueurCourant.getJeu()) {
-			if (!(carte instanceof IBonifiable))
-				continue;
-
-			IBonifiable bonifiable = (IBonifiable) carte;
-			if (this.bonifiablesAffectes.contains(bonifiable))
-				bonifiable.retirerBonus(bonusVie, bonusAttaque);
-		}
+		for (IBonifiable bonifiable : bonifiablesAffectes)
+			bonifiable.retirerBonus(bonusVie, bonusAttaque);
 	}
 
 	@Override

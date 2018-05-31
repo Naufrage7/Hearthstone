@@ -111,6 +111,7 @@ public class Serviteur extends Carte implements ICible, IBonifiable, ITemporisab
 		if (cibleVisee.peutRecevoirDegats()) {
 			cibleVisee.recevoirDegats(attaque);
 			setVie(getVie() - cibleVisee.getVie());
+			System.out.println("Le serviteur attaque ...");
 		} else {
 			throw new CibleInvalideException("La cible ne peut pas recevoir de dégats !");
 		}

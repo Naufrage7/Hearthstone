@@ -256,9 +256,7 @@ public class Joueur implements IJoueur {
 
 	@Override
 	public void utiliserCarte(ICarte carte, Object cible) throws HearthstoneException {
-		if ( carte instanceof Serviteur ) {
-			((Serviteur)carte).attaquer(cible);
-		}
+		((Serviteur)carte).attaquer(cible);
 	}
 
 	@Override

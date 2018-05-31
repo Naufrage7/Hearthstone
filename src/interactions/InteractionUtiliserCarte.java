@@ -1,12 +1,8 @@
 package interactions;
 
-import java.util.Scanner;
-
-import application.Main;
 import carte.ICarte;
-import exception.CibleInvalideException;
+import carte.ICible;
 import exception.HearthstoneException;
-import joueur.IJoueur;
 import plateau.Plateau;
 
 public class InteractionUtiliserCarte extends Interaction {
@@ -22,7 +18,17 @@ public class InteractionUtiliserCarte extends Interaction {
 
 	@Override
 	protected void traitementSpecialise() {
-
+		ICarte carte = getCarte();
+		ICible cible = getCible();
+		
+		System.out.println(cible);
+		System.out.println(carte);
+		
+		try {
+			Plateau.getInstance().getJoueurCourant().utiliserCarte(carte, cible);
+		} catch (HearthstoneException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	@Override

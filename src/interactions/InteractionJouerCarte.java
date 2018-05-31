@@ -102,7 +102,7 @@ public class InteractionJouerCarte extends Interaction {
 		try {
 			Plateau.getInstance().getJoueurCourant().jouerCarte(carte, cible);
 		} catch (HearthstoneException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 

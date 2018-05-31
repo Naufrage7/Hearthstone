@@ -227,6 +227,9 @@ public class Joueur implements IJoueur {
 
 	@Override
 	public void jouerCarte(ICarte carte, Object cible) throws HearthstoneException {
+		if ( carte == null )
+			throw new HearthstoneException("La carte est nulle !");
+		
 		if ( carte.getCout() > this.stockMana )
 			throw new HearthstoneException("Impossible de jouer une carte coutant plus de mana que le joueur n'en possède.");
 	

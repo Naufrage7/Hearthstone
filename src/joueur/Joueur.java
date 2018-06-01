@@ -1,6 +1,7 @@
 package joueur;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import application.Main;
 import capacite.AttaqueCiblee;
@@ -107,7 +108,7 @@ public class Joueur implements IJoueur {
 		this.deck.add(new Serviteur(2, 2, "Chef de raid", 3, new EffetPermanent("Bonus du chef de raid", "Confère un bonus +1/0", 1, 0), this));
 		this.deck.add(new Serviteur(5, 4, "Garde de Baie-du-butin", 5, new Provocation("Provocation", "Force le joueur adverse à viser cette cible"), this));
 		this.deck.add(new Serviteur(5, 2, "La missilière téméraire", 6, new Charge("Charge", "Permet à un serviteur d'attaquer tout de suite !"), this));
-		this.deck.add(new Serviteur(4, 4, "L'orgre-magi", 4, new Provocation("Provocation", "Force le joueur adverse à viser cette cible"), this));
+		this.deck.add(new Serviteur(4, 4, "L'ogre-magi", 4, new Provocation("Provocation", "Force le joueur adverse à viser cette cible"), this));
 		this.deck.add(new Serviteur(4, 7, "Archimage", 6, new Provocation("Provocation", "Force le joueur adverse à viser cette cible"), this));
 		this.deck.add(new Serviteur(1, 1, "Gnôme lépreux", 1, new AttaqueCiblee("Attaque du lépreux", "Inflige 2 points de dégats", 2), this));
 		this.deck.add(new Serviteur(2, 3, "Golem des moissons", 3, new InvocationDeServiteurs("Golémisation", "Invoque un \"Golem endomagé\" +2/+1 qui n'a aucune capacité", new Serviteur(2, 1, "Golem endomagé", 0, null, this)), this));
@@ -116,7 +117,7 @@ public class Joueur implements IJoueur {
 			this.deck.add(new Sort("Choc de flamme", 7, new AttaqueTotale("Attaque massive", "Inflige 4 points de dégats à toutes les cibles adverses", 4), this));
 			this.deck.add(new Sort("Eclair de givre", 2, new AttaqueCiblee("Attaque du givre", "Inflige 3 de dégats", 3), this));
 			this.deck.add(new Sort("Intelligence des arcanes", 2, new Pioche("Pioche", "Pioche 2 cartes", 2), this));
-			this.deck.add(new Sort("Image miroir", 7, new ImageMiroir("Image miroir", ""), this));
+			this.deck.add(new Sort("Image miroir", 7, new ImageMiroir("Image miroir", "Invoque 2 serviteurs de Jaina2"), this));
 			this.deck.add(new Sort("Explosion pyrotechnique", 10, new AttaqueCiblee("Explosion pyrotechnique", "Inflige 10 points de dégats", 10), this));
 		} else if ( this.heros.getNom().equals("Rexxar") ) {
 			this.deck.add(new Serviteur(3, 2, "Busard affamé", 5, new Pioche("Pioche", "Pioche 1 carte", 1), this));
@@ -125,6 +126,8 @@ public class Joueur implements IJoueur {
 			this.deck.add(new Sort("Lâchez les chiens", 3,  new InvocationDesChiens("", "", this), this));
 			this.deck.add(new Sort("Ordre de tuer", 3, new AttaqueCiblee("Ordre de tuer", "Inflige 2 points de dégats", 3), this));
 		}
+		
+		Collections.shuffle(this.deck);
 	}
 	
 	@Override
@@ -161,7 +164,7 @@ public class Joueur implements IJoueur {
 	public ICarte getCarteEnJeu(String nomCarte) {
 		ICarte carte = null;
 		for (ICarte c : jeu) {
-			if ( c.getNom().contains(nomCarte) ) {
+			if ( c.getNom().toLowerCase().contains(nomCarte.toLowerCase()) ) {
 				carte = c;
 				break;
 			}
@@ -174,7 +177,7 @@ public class Joueur implements IJoueur {
 	public ICarte getCarteEnMain(String nomCarteMain) {
 		ICarte carte = null;
 		for (ICarte c : main) {
-			if ( c.getNom().contains(nomCarteMain) ) {
+			if ( c.getNom().toLowerCase().contains(nomCarteMain.toLowerCase()) ) {
 				carte = c;
 				break;
 			}
@@ -202,7 +205,9 @@ public class Joueur implements IJoueur {
 				if ( !temporisable.peutJouer() )
 					temporisable.setPeutJouer(true);
 			}
-		}		
+		}
+		
+		this.getHeros().setCapaciteUtilisee(false);
 	}
 
 	@Override
@@ -266,9 +271,7 @@ public class Joueur implements IJoueur {
 
 	@Override
 	public void perdreCarte(ICarte carte) throws HearthstoneException {
-		System.out.println(jeu.size());
 		jeu.remove(carte);
-		System.out.println(jeu.size());
 		carte.executerEffetDisparition(null);
 	}
 

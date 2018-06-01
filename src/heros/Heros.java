@@ -13,6 +13,7 @@ public class Heros implements ICible {
 	private String nom;
 	private int vie;
 	private Capacite pouvoir;
+	private boolean capaciteUtilisee;
 
 	/**
 	 * Construit un héros à partir de son nom et de sa vie
@@ -26,6 +27,15 @@ public class Heros implements ICible {
 		this.setNom(nom);
 		this.setVie(vie);
 		this.setPouvoir(pouvoir);
+		this.setCapaciteUtilisee(false);
+	}
+
+	public void setCapaciteUtilisee(boolean capaciteUtilisee) {
+		this.capaciteUtilisee = capaciteUtilisee;
+	}
+	
+	public boolean getCapaciteUtilisee() {
+		return capaciteUtilisee;
 	}
 
 	/**

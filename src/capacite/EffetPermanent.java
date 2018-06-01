@@ -47,9 +47,7 @@ public class EffetPermanent extends Capacite {
 			if (!(carte instanceof IBonifiable) || carte.getCapacite() == this)
 				continue;
 			
-			IBonifiable bonifiable = (IBonifiable) carte;
-			bonifiable.ajouterBonus(bonusVie, bonusAttaque);
-			bonifiablesAffectes.add(bonifiable);
+			executerAction(carte);
 		}
 	}
 
@@ -74,6 +72,7 @@ public class EffetPermanent extends Capacite {
 		}
 		
 		bonifiable.ajouterBonus(bonusVie, bonusAttaque);
+		bonifiablesAffectes.add(bonifiable);
 	}
 
 	@Override

@@ -50,7 +50,11 @@ public class AttaqueCiblee extends Capacite {
 			throw new CibleInvalideException("La cible doit être une cible valide.");
 		
 		ICible cibleVisee = (ICible) cible;
-		cibleVisee.recevoirDegats(this.degats);	
+		if ( cibleVisee.peutRecevoirDegats() ) {
+			cibleVisee.recevoirDegats(this.degats);	
+		} else {
+			throw new CibleInvalideException("La cible ne peut pas recevoir de dégats !");
+		}
 	}
 
 	@Override

@@ -27,7 +27,12 @@ public class InteractionPouvoirHeros extends Interaction {
 		IJoueur joueurAdverse = null;
 		
 		try {
-			joueurCourant.getHeros().getPouvoir().executerAction(getCible());
+			if ( joueurCourant.getHeros().getCapaciteUtilisee() == false ) {
+				joueurCourant.getHeros().getPouvoir().executerAction(getCible());
+				joueurCourant.getHeros().setCapaciteUtilisee(true);
+			} else {
+				System.err.println("La capacité du héros a déjà été utilisée ce tour");
+			}
 		} catch (HearthstoneException e) {
 			System.out.println(e.getMessage());
 		}

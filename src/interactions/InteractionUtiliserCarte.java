@@ -18,7 +18,9 @@ public class InteractionUtiliserCarte extends Interaction {
 
 	@Override
 	protected void traitementSpecialise() {
-		ICarte carte = getCarte();
+		ICarte carte = getCarteEnJeu();
+		if ( carte == null )
+			System.err.println("La carte choisie n'existe pas !");
 		ICible cible = getCible();
 		
 		System.out.println(cible);
@@ -27,7 +29,7 @@ public class InteractionUtiliserCarte extends Interaction {
 		try {
 			Plateau.getInstance().getJoueurCourant().utiliserCarte(carte, cible);
 		} catch (HearthstoneException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
 

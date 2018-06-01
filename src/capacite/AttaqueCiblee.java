@@ -25,14 +25,7 @@ public class AttaqueCiblee extends Capacite {
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
 		// TODO Auto-generated method stub
-		if ( cible == null )
-			throw new CibleInvalideException("La cible ne peut pas être nulle.");
-		
-		if ( !(cible instanceof ICible) )
-			throw new CibleInvalideException("La cible doit être une cible valide.");
-		
-		ICible cibleVisee = (ICible) cible;
-		cibleVisee.recevoirDegats(this.degats);	
+		executerAction(cible);
 	}
 
 	@Override
@@ -50,6 +43,14 @@ public class AttaqueCiblee extends Capacite {
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
 		// TODO Auto-generated method stub
+		if ( cible == null )
+			throw new CibleInvalideException("La cible ne peut pas être nulle.");
+		
+		if ( !(cible instanceof ICible) )
+			throw new CibleInvalideException("La cible doit être une cible valide.");
+		
+		ICible cibleVisee = (ICible) cible;
+		cibleVisee.recevoirDegats(this.degats);	
 	}
 
 	@Override

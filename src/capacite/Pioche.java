@@ -17,11 +17,7 @@ public class Pioche extends Capacite {
 	
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
-		IPlateau plateau = Plateau.getInstance();
-		IJoueur joueurCourant = plateau.getJoueurCourant();
-		
-		for ( int i = 0; i < this.quantite; i++ )
-			joueurCourant.piocher();
+		executerAction(cible);
 	}
 
 	@Override
@@ -39,7 +35,11 @@ public class Pioche extends Capacite {
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
 		// TODO Auto-generated method stub
+		IPlateau plateau = Plateau.getInstance();
+		IJoueur joueurCourant = plateau.getJoueurCourant();
 		
+		for ( int i = 0; i < this.quantite; i++ )
+			joueurCourant.piocher();
 	}
 
 	@Override

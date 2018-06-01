@@ -120,4 +120,10 @@ public class Heros implements ICible {
 		return !provocationSurLeTerrain;
 	}
 
+	@Override
+	public int getAttaque() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

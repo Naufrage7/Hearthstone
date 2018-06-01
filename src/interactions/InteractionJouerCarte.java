@@ -1,14 +1,8 @@
 package interactions;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
-import application.Main;
 import carte.ICarte;
 import carte.ICible;
-import exception.CibleInvalideException;
 import exception.HearthstoneException;
-import joueur.IJoueur;
 import plateau.Plateau;
 
 public class InteractionJouerCarte extends Interaction {
@@ -24,7 +18,7 @@ public class InteractionJouerCarte extends Interaction {
 	
 	@Override
 	protected void traitementSpecialise() {		
-		ICarte carte = getCarte();
+		ICarte carte = getCarteEnMain();
 		ICible cible = getCible();
 		System.out.println(cible);
 		

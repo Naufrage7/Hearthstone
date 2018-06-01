@@ -15,6 +15,11 @@ public class AttaqueTotale extends AttaqueCiblee {
 	
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+		this.executerAction(cible);
+	}
+	
+	@Override
+	public void executerAction(Object cible) throws HearthstoneException {
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurAdverse = plateau.getAdversaire(plateau.getJoueurCourant());
 		

@@ -120,8 +120,14 @@ public class Main {
 		creerInteractions();
 		Plateau plateau = Plateau.getInstance();
 		
-		IJoueur j1 = new Joueur("Théo", new Heros("Jaina", 15, new AttaqueCiblee("Boule de feu", "Inflige 1 point de dégat", 1)));
-		IJoueur j2 = new Joueur("Alex", new Heros("Rexxar", 15, new AttaqueCiblee("Petite flèche", "Inflige 1 point de dégat", 1)));
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Nom du joueur 1 : ");
+		String nomJoueur1 = sc.nextLine();
+		System.out.print("Nom du joueur 2 : ");
+		String nomJoueur2 = sc.nextLine();
+		
+		IJoueur j1 = new Joueur(nomJoueur1, new Heros("Jaina", 15, new AttaqueCiblee("Boule de feu", "Inflige 1 point de dégat", 1)));
+		IJoueur j2 = new Joueur(nomJoueur2, new Heros("Rexxar", 15, new AttaqueCiblee("Petite flèche", "Inflige 1 point de dégat", 1)));
 		
 		try {
 			plateau.ajouterJoueur(j1);
@@ -130,13 +136,15 @@ public class Main {
 			plateau.demarrerPartie();
 			System.out.print("\033[H\033[2J");
 			
-			while ( plateau.estDemarree() ) {
+			while ( plateau.estDemarree() && Plateau.getInstance().getJoueurCourant().getHeros().getVie() > 0 ) {
 				afficherHud();
 				afficherMain();				
 				afficherTerrain();
 				afficherMenu(interactions);
 				System.out.print("\033[H\033[2J");
 			}
+			
+			System.out.println(Plateau.getInstance().getAdversaire(Plateau.getInstance().getJoueurCourant()).getPseudo() + " gagne la partie !");
 		} catch ( HearthstoneException e ) {
 			e.printStackTrace();
 		}

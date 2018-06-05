@@ -4,7 +4,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import capacite.AttaqueCiblee;
-import capacite.Capacite;
 import carte.ICarte;
 import carte.Serviteur;
 import carte.Sort;
@@ -87,6 +86,7 @@ public class Main {
 	}
 	
 	public static int recupererChoix() {
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 		boolean choixValide = false;
 		int choix = 0;

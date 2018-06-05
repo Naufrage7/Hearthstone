@@ -1,7 +1,5 @@
 package capacite;
 
-import java.util.Iterator;
-
 import carte.ICarte;
 import carte.ICible;
 import exception.HearthstoneException;

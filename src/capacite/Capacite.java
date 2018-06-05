@@ -1,6 +1,5 @@
 package capacite;
 
-import carte.ICarte;
 import exception.HearthstoneException;
 
 public abstract class Capacite implements ICapacite {

@@ -1,6 +1,5 @@
 package capacite;
 
-import carte.ICarte;
 import carte.ICible;
 import exception.CibleInvalideException;
 import exception.HearthstoneException;

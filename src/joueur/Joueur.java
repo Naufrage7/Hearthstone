@@ -3,7 +3,6 @@ package joueur;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import application.Main;
 import capacite.AttaqueCiblee;
 import capacite.AttaqueDuHeros;
 import capacite.AttaqueTotale;

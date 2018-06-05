@@ -13,6 +13,11 @@ public class AttaqueDuHeros extends AttaqueCiblee {
 	
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+		executerAction(cible);
+	}
+	
+	@Override
+	public void executerAction(Object cible) throws HearthstoneException {
 		if ( cible == null )
 			throw new CibleInvalideException("La cible ne peut pas être nulle.");
 		

@@ -110,8 +110,8 @@ public class Serviteur extends Carte implements ICible, IBonifiable, ITemporisab
 		ICible cibleVisee = (ICible) cible;
 		if (cibleVisee.peutRecevoirDegats()) {
 			cibleVisee.recevoirDegats(attaque);
-			setVie(getVie() - cibleVisee.getVie());
-			System.out.println("Le serviteur attaque ...");
+			recevoirDegats(cibleVisee.getAttaque());
+			setPeutJouer(false);
 		} else {
 			throw new CibleInvalideException("La cible ne peut pas recevoir de dégats !");
 		}
@@ -120,14 +120,6 @@ public class Serviteur extends Carte implements ICible, IBonifiable, ITemporisab
 	@Override
 	public void recevoirDegats(int degats) {
 		this.setVie(this.getVie() - degats);
-		if ( disparait() ) {
-			Plateau.getInstance().getJoueurCourant().getJeu().remove(this);
-			try {
-				Plateau.getInstance().getAdversaire(Plateau.getInstance().getJoueurCourant()).getJeu().remove(this);
-			} catch (HearthstoneException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 
 	@Override

@@ -15,7 +15,7 @@ public class InvocationDeServiteurs extends Capacite {
 	
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
-		Plateau.getInstance().getJoueurCourant().jouerCarte(serviteur, cible);
+		executerAction(cible);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class InvocationDeServiteurs extends Capacite {
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
 		// TODO Auto-generated method stub
-		
+		Plateau.getInstance().getJoueurCourant().jouerCarte(serviteur, cible);
 	}
 
 	@Override

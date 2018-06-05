@@ -1,5 +1,7 @@
 package capacite;
 
+import java.util.Iterator;
+
 import carte.ICarte;
 import carte.ICible;
 import exception.HearthstoneException;
@@ -15,6 +17,11 @@ public class AttaqueTotale extends AttaqueCiblee {
 	
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
+		this.executerAction(cible);
+	}
+	
+	@Override
+	public void executerAction(Object cible) throws HearthstoneException {
 		IPlateau plateau = Plateau.getInstance();
 		IJoueur joueurAdverse = plateau.getAdversaire(plateau.getJoueurCourant());
 		

@@ -13,9 +13,7 @@ public class InvocationDesChiens extends Capacite {
 	
 	@Override
 	public void executerEffetMiseEnJeu(Object cible) throws HearthstoneException {
-		int nombreServiteursAdverse = Plateau.getInstance().getAdversaire(Plateau.getInstance().getJoueurCourant()).getJeu().size();
-		for ( int i = 0; i < nombreServiteursAdverse; i++ )
-			Plateau.getInstance().getJoueurCourant().jouerCarte(new Serviteur(1, 1, "Chien de Rexxar", 0, new Charge("Charge", "Permet de jouer de suite"), Plateau.getInstance().getJoueurCourant()));
+		executerAction(cible);
 	}
 
 	@Override
@@ -33,7 +31,9 @@ public class InvocationDesChiens extends Capacite {
 	@Override
 	public void executerAction(Object cible) throws HearthstoneException {
 		// TODO Auto-generated method stub
-		
+		int nombreServiteursAdverse = Plateau.getInstance().getAdversaire(Plateau.getInstance().getJoueurCourant()).getJeu().size();
+		for ( int i = 0; i < nombreServiteursAdverse; i++ )
+			Plateau.getInstance().getJoueurCourant().jouerCarte(new Serviteur(1, 1, "Chien de Rexxar", 0, new Charge("Charge", "Permet de jouer de suite"), Plateau.getInstance().getJoueurCourant()));
 	}
 
 	@Override

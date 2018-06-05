@@ -114,7 +114,7 @@ public abstract class Interaction {
 		return cible;
 	}
 	
-	protected ICarte getCarte() {
+	protected ICarte getCarteEnMain() {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("Nom de la carte : ");
 		String nomCarte = sc.nextLine();
@@ -125,6 +125,19 @@ public abstract class Interaction {
 		IJoueur joueurCourant = Plateau.getInstance().getJoueurCourant();
 		
 		return joueurCourant.getCarteEnMain(nomCarte);
+	}
+	
+	protected ICarte getCarteEnJeu() {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Nom de la carte : ");
+		String nomCarte = sc.nextLine();
+		
+		if ( nomCarte.length() == 0 )
+			return null;
+
+		IJoueur joueurCourant = Plateau.getInstance().getJoueurCourant();
+		
+		return joueurCourant.getCarteEnJeu(nomCarte);
 	}
 	
 	protected abstract void traitementSpecialise();

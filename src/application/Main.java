@@ -4,8 +4,10 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import capacite.AttaqueCiblee;
+import capacite.Capacite;
 import carte.ICarte;
 import carte.Serviteur;
+import carte.Sort;
 import exception.HearthstoneException;
 import heros.Heros;
 import interactions.Interaction;
@@ -16,42 +18,11 @@ import interactions.InteractionPouvoirHeros;
 import interactions.InteractionUtiliserCarte;
 import joueur.IJoueur;
 import joueur.Joueur;
-import capacite.ITemporisable;
 import plateau.Plateau;
 
 public class Main {
 	
 	private static Interaction interactions;
-	
-	public static void afficherCarteMain(ICarte carte) {	
-		System.out.print("## ");
-		
-		if ( carte.getProprietaire() == Plateau.getInstance().getJoueurCourant() ) {
-			String jouable = ".......";
-			
-			if ( carte.getCout() <= Plateau.getInstance().getJoueurCourant().getStockMana() )
-				jouable = "JOUABLE";
-			
-			System.out.print(jouable + " (" + carte.getCout() + ") ");
-		}
-		
-		System.out.println(carte);
-	}
-	
-	public static void afficherCarteJeu(ICarte carte) {
-		if ( carte.getProprietaire() == Plateau.getInstance().getJoueurCourant() ) {
-			if ( carte instanceof ITemporisable ) {
-				String jouable = ".......";
-
-				if ( ((ITemporisable)carte).peutJouer() )
-					jouable = "JOUABLE";
-				
-				System.out.print(jouable + " (" + carte.getCout() + ") ");
-			}
-		}
-		
-		System.out.println(carte);
-	}
 	
 	public static void afficherTerrain() {
 		IJoueur joueurCourant = Plateau.getInstance().getJoueurCourant();
@@ -63,40 +34,41 @@ public class Main {
 			e.printStackTrace();
 		}
 		
-		System.out.println("\n==================================");
-		for ( ICarte carte : joueurCourant.getJeu() )
-			afficherCarteJeu(carte);
-		System.out.println("==================================");
-		System.out.println("----------------------------------");
-		System.out.println("==================================");
-		for ( ICarte carte : joueurAdverse.getJeu() )
-			afficherCarteJeu(carte);
-		System.out.println("==================================");
+		System.out.println("\nVotre plateau de jeu ( " + joueurCourant.getJeu().size() + " carte(s) )");
+		for ( ICarte carte : joueurCourant.getJeu() ) {
+			Serviteur serviteur = (Serviteur) carte;
+			System.out.println("    - " + serviteur.getNom() + " " + serviteur.getAttaque() + "/" + serviteur.getVie() + (serviteur.getCapacite() != null ? serviteur.getCapacite().getNom() + " : " + serviteur.getCapacite().getDescription() : ""));
+		}
+		
+		System.out.println("\nLe héros de votre adversaire a " + joueurAdverse.getHeros().getVie() + " point(s) de vie.");
+		System.out.println("Plateau de jeu de l'adversaire ( " + joueurAdverse.getJeu().size() + " carte(s) )");
+		for ( ICarte carte : joueurAdverse.getJeu() ) {
+			Serviteur serviteur = (Serviteur) carte;
+			System.out.println("    - " + serviteur.getNom() + " " + serviteur.getAttaque() + "/" + serviteur.getVie() + (serviteur.getCapacite() != null ? serviteur.getCapacite().getNom() + " : " + serviteur.getCapacite().getDescription() : ""));
+		}
 	}
 	
 	public static void afficherHud() {
 		IJoueur joueurCourant = Plateau.getInstance().getJoueurCourant();
 		
-		System.out.println("**************************************************");
-		System.out.println(joueurCourant.getPseudo() + " joue " + joueurCourant.getHeros().getNom() + " ( " + joueurCourant.getHeros().getVie() + " points de vie restants )");
-		System.out.println("Stock de mana : " + joueurCourant.getStockMana());
-		System.out.println("Pouvoir du héros : " + joueurCourant.getHeros().getPouvoir().getNom() + " ( " + joueurCourant.getHeros().getPouvoir().getDescription() + " )");
+		System.out.println(joueurCourant.getPseudo() + ", votre héros a " + joueurCourant.getHeros().getVie() + " point(s) de vie.");
+		System.out.println("Vous avez " + joueurCourant.getStockMana() + " point(s) de mana à votre disposition.");
 	}
 	
 	public static void afficherMain() {
 		IJoueur joueurCourant = Plateau.getInstance().getJoueurCourant();
 		
-		System.out.println("\n### Contenu de ma main ###");
-		System.out.println("##########################");
-		
-		if ( joueurCourant.getMain().isEmpty() ) {
-			System.out.println("## VIDE");
-		} else {
-			for ( ICarte carte : joueurCourant.getMain() )
-				afficherCarteMain(carte);
+		System.out.println("\nVotre main ( " + joueurCourant.getMain().size() + " carte(s) )");
+
+		for ( ICarte carte : joueurCourant.getMain() ) {
+			if ( carte instanceof Serviteur ) {
+				Serviteur serviteur = (Serviteur) carte;
+				System.out.println("  " + carte.getCout() + "  - " + serviteur.getNom() + " " + serviteur.getAttaque() + "/" + serviteur.getVie() + (serviteur.getCapacite() != null ? " ( " + serviteur.getCapacite().getNom() + " : " + serviteur.getCapacite().getDescription() + " )" : ""));
+			} else {
+				Sort sort = (Sort) carte;
+				System.out.println("  " + carte.getCout() + "  - " + sort.getNom() + " : " + sort.getDescription());
+			}
 		}
-		
-		System.out.println("##########################");
 	}
 	
 	public static void afficherMenu(Interaction interactions) {
@@ -148,33 +120,22 @@ public class Main {
 		creerInteractions();
 		Plateau plateau = Plateau.getInstance();
 		
-		IJoueur j1 = new Joueur("Théo", new Heros("Jaina", 15, new AttaqueCiblee("Boule de feu", "Inflige 1 de dégats", 1)));
-		IJoueur j2 = new Joueur("Alex", new Heros("Rexxar", 15, new AttaqueCiblee("Petite flèche", "Inflige 1 de dégats", 1)));
+		IJoueur j1 = new Joueur("Théo", new Heros("Jaina", 15, new AttaqueCiblee("Boule de feu", "Inflige 1 point de dégat", 1)));
+		IJoueur j2 = new Joueur("Alex", new Heros("Rexxar", 15, new AttaqueCiblee("Petite flèche", "Inflige 1 point de dégat", 1)));
 		
 		try {
 			plateau.ajouterJoueur(j1);
 			plateau.ajouterJoueur(j2);
 			
 			plateau.demarrerPartie();
-			
-			for ( int i = 0; i < 10 * 2; i++ ) {
-				try {
-					IJoueur joueurCourant = plateau.getJoueurCourant();
-					
-					joueurCourant.finirTour();
-					
-					plateau.setJoueurCourant(plateau.getAdversaire(joueurCourant));
-					plateau.getJoueurCourant().prendreTour();
-				} catch ( HearthstoneException e ) {
-					e.printStackTrace();
-				}
-			}
+			System.out.print("\033[H\033[2J");
 			
 			while ( plateau.estDemarree() ) {
 				afficherHud();
 				afficherMain();				
 				afficherTerrain();
 				afficherMenu(interactions);
+				System.out.print("\033[H\033[2J");
 			}
 		} catch ( HearthstoneException e ) {
 			e.printStackTrace();

@@ -58,5 +58,9 @@ public class Sort extends Carte {
 	public boolean disparait() {
 		return true;
 	}
+
+	public String getDescription() {
+		return super.capacite.getDescription();
+	}
 	
 }

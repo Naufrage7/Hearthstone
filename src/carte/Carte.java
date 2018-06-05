@@ -10,7 +10,7 @@ public abstract class Carte implements ICarte {
 	private String nom;
 	private int cout;
 	private IJoueur proprietaire;
-	private Capacite capacite;
+	protected Capacite capacite;
 	
 	/**
 	 * Instancie une nouvelle Carte

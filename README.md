@@ -1,2 +1,2 @@
 # Hearthstone
-Projet final de L2 Informatique par ALEXANDRE CONRAD et THEO BARRAGUE.
+Projet réalisé dans un cadre universitaire pour la mise en oeuvre de la programmation orientée objet par ALEXANDRE CONRAD et THEO BARRAGUE.
